@@ -144,4 +144,8 @@
   {:else}
     <p class="empty-state">No languages added</p>
   {/if}
+
+  <!-- Notes -->
+  <h2>Notes</h2>
+  <p class="notes-line">Current HP: {$computedHP}</p>
 </div>

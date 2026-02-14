@@ -8,6 +8,7 @@
   import { exportCharacter, importCharacter, resetCharacter } from '../stores/persistence';
 
   let fileInput: HTMLInputElement;
+  let helpDialog: HTMLDialogElement;
 
   function handleExport() {
     exportCharacter($character);
@@ -38,7 +39,7 @@
 
 <div class="app">
   <header class="toolbar" data-print-hide>
-    <h1>PF2e Character Sheet</h1>
+    <h1>PF2e Character Sheet <a href="https://github.com/pytrik/pf2e-sheet" target="_blank" class="title-link">GitHub</a></h1>
     <div class="toolbar-actions">
       <button on:click={handleNew} class="secondary">New</button>
       <button on:click={handleExport} class="secondary">Export JSON</button>
@@ -51,9 +52,21 @@
         on:change={handleFileSelected}
         hidden
       />
-      <a href="https://github.com/pytrik/pf2e-sheet" target="_blank" class="toolbar-link">GitHub</a>
+      <button on:click={() => helpDialog.showModal()} class="secondary">?</button>
     </div>
   </header>
+
+  <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+  <dialog bind:this={helpDialog} class="help-dialog" on:click|self={() => helpDialog.close()}>
+    <h2>PF2e Character Sheet</h2>
+    <p>Fill in the form on the left — the sheet preview on the right updates live.</p>
+    <ul>
+      <li>Stats, saves, skills, and attack bonuses are <strong>auto-calculated</strong> from ability modifiers and proficiency.</li>
+      <li>Your character is <strong>auto-saved</strong> in the browser. Use Export/Import to back up or transfer as JSON.</li>
+      <li>Press <strong>Ctrl+P</strong> (or the Print button) to print — only the sheet pages are printed.</li>
+    </ul>
+    <button on:click={() => helpDialog.close()}>Close</button>
+  </dialog>
   <div class="panels">
     <div class="panel-left" data-print-hide>
       <InputPanel />
@@ -103,17 +116,55 @@
     background: rgba(255, 255, 255, 0.15);
   }
 
-  .toolbar-link {
-    color: white;
-    font-size: 0.8rem;
-    padding: 4px 10px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: var(--radius);
+  .title-link {
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
+    margin-left: 6px;
   }
 
-  .toolbar-link:hover {
-    background: rgba(255, 255, 255, 0.15);
+  .title-link:hover {
+    color: white;
+  }
+
+  .help-dialog {
+    max-width: 460px;
+    margin-top: 42px;
+    margin-right: 0;
+    margin-left: auto;
+    margin-bottom: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: var(--spacing-lg);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .help-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  .help-dialog h2 {
+    font-size: 1.1rem;
+    margin: 0 0 var(--spacing-sm);
+  }
+
+  .help-dialog p {
+    margin: 0 0 var(--spacing-sm);
+  }
+
+  .help-dialog ul {
+    margin: 0 0 var(--spacing-md);
+    padding-left: 1.2em;
+  }
+
+  .help-dialog li {
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .help-dialog button {
+    float: right;
   }
 
   .panels {

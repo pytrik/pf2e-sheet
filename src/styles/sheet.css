@@ -287,6 +287,13 @@
   line-height: 1.4;
 }
 
+/* --- Notes --- */
+.notes-line {
+  font-size: 0.78rem;
+  color: #333;
+  margin: 1mm 0 2mm;
+}
+
 /* --- Empty state --- */
 .empty-state {
   font-size: 0.78rem;
