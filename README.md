@@ -31,8 +31,9 @@ Key stats (AC, saves, skills, class DC, spell DC, attack bonuses, HP) are auto-c
 - Full spell support (tradition, DC, attack, slots, entries per level)
 - Auto-calculated HP (class + CON + ancestry + extras)
 - localStorage auto-save with JSON export/import
+- Share characters via URL — compresses character data into the link, no server needed
 - Browser-native printing with print-optimized CSS
-- Clean, minimal sheet design with polished input UI
+- Clean, minimal sheet design with toolbar icons
 
 ## Getting Started
 
@@ -48,4 +49,5 @@ npm run build    # production build → dist/index.html
 2. Fill in character details using the input form on the left
 3. Preview the rendered sheet on the right in real time
 4. Use **Export** to save character data as JSON, **Import** to load it back
-5. Print via Ctrl+P — the preview is styled for clean A4 output
+5. Click **Share** to copy a URL containing your character — anyone who opens it loads the sheet instantly
+6. Print via Ctrl+P — the preview is styled for clean A4 output
