@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "A single-page application for creating clean, readable Pathfinder 2nd Edition character sheets. The app compiles to a single HTML file for easy distribution and offline use.",
   "license": "MIT",
-  "private": true,
+  "homepage": "https://pytrik.github.io/pf2e-sheet/",
+  "repository": "github:pytrik/pf2e-sheet",
+  "author": "pytrik",
   "type": "module",
   "scripts": {
     "dev": "node scripts/dev.mjs",
