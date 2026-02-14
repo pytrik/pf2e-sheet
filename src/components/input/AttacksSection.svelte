@@ -5,6 +5,7 @@
   import ProficiencySelector from './shared/ProficiencySelector.svelte';
   import NumberInput from './shared/NumberInput.svelte';
   import AbilitySelect from './shared/AbilitySelect.svelte';
+  import ActionSelect from './shared/ActionSelect.svelte';
 
   function addAttack() {
     $character.attacks = [
@@ -39,12 +40,7 @@
         </div>
         <div class="field">
           {#if i === 0}<span class="column-header">Act</span>{/if}
-          <input
-            type="text"
-            bind:value={attack.actions}
-            placeholder="1"
-            class="actions-input"
-          />
+          <ActionSelect bind:value={attack.actions} />
         </div>
         <div class="field">
           {#if i === 0}<span class="column-header">Ability</span>{/if}
@@ -135,11 +131,6 @@
 
   .grow input {
     width: 100%;
-  }
-
-  .actions-input {
-    width: 50px;
-    text-align: center;
   }
 
   .damage-input {
