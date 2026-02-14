@@ -1,5 +1,7 @@
 # PF2e Character Sheet Builder
 
+**[Try it live](https://pytrik.github.io/pf2e-sheet/)**
+
 A single-page application for creating clean, readable Pathfinder 2nd Edition character sheets. The app compiles to a single HTML file for easy distribution and offline use.
 
 ## Overview
