@@ -54,11 +54,11 @@
   <header class="toolbar" data-print-hide>
     <h1>PF2e Character Sheet <a href="https://github.com/pytrik/pf2e-sheet" target="_blank" class="title-link">GitHub</a></h1>
     <div class="toolbar-actions">
-      <button on:click={handleNew} class="secondary">New</button>
-      <button on:click={handleExport} class="secondary">Export JSON</button>
-      <button on:click={handleImport} class="secondary">Import JSON</button>
-      <button on:click={handleShare} class="secondary">{shareLabel}</button>
-      <button on:click={() => window.print()} class="secondary">Print</button>
+      <button on:click={handleNew} class="secondary"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg> New</button>
+      <button on:click={handleExport} class="secondary"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export</button>
+      <button on:click={handleImport} class="secondary"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Import</button>
+      <button on:click={handleShare} class="secondary"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> {shareLabel}</button>
+      <button on:click={() => window.print()} class="secondary"><svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> Print</button>
       <input
         type="file"
         accept=".json"
@@ -66,7 +66,7 @@
         on:change={handleFileSelected}
         hidden
       />
-      <button on:click={() => helpDialog.showModal()} class="secondary">?</button>
+      <button on:click={() => helpDialog.showModal()} class="secondary"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></button>
     </div>
   </header>
 
@@ -124,6 +124,20 @@
     border-color: rgba(255, 255, 255, 0.4);
     font-size: 0.8rem;
     padding: 4px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .toolbar-actions button :global(svg) {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
   }
 
   .toolbar-actions button:hover {
