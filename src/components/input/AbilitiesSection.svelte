@@ -3,6 +3,7 @@
   import { AbilityEntryType } from '../../types/constants';
   import { generateId } from '../../utils/format';
   import NumberInput from './shared/NumberInput.svelte';
+  import ActionSelect from './shared/ActionSelect.svelte';
 
   const abilityTypes = Object.values(AbilityEntryType);
 
@@ -46,12 +47,7 @@
         </div>
         <div class="field">
           {#if i === 0}<span class="column-header">Act</span>{/if}
-          <input
-            type="text"
-            bind:value={entry.actions}
-            placeholder="--"
-            class="actions-input"
-          />
+          <ActionSelect bind:value={entry.actions} />
         </div>
         <div class="field">
           {#if i === 0}<span class="column-header">Type</span>{/if}
@@ -146,11 +142,6 @@
 
   .grow input {
     width: 100%;
-  }
-
-  .actions-input {
-    width: 50px;
-    text-align: center;
   }
 
   .level-input {

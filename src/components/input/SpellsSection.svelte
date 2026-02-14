@@ -5,6 +5,7 @@
   import ProficiencySelector from './shared/ProficiencySelector.svelte';
   import NumberInput from './shared/NumberInput.svelte';
   import AbilitySelect from './shared/AbilitySelect.svelte';
+  import ActionSelect from './shared/ActionSelect.svelte';
   import CollapsibleSection from './shared/CollapsibleSection.svelte';
 
   function addSpell(level: SpellLevel) {
@@ -85,12 +86,7 @@
                   </div>
                   <div class="field">
                     {#if i === 0}<span class="column-header">Act</span>{/if}
-                    <input
-                      type="text"
-                      bind:value={spell.actions}
-                      placeholder="2"
-                      class="actions-input"
-                    />
+                    <ActionSelect bind:value={spell.actions} />
                   </div>
                   <div class="field">
                     {#if i === 0}<span class="column-header">&nbsp;</span>{/if}
@@ -223,11 +219,6 @@
 
   .grow input {
     width: 100%;
-  }
-
-  .actions-input {
-    width: 50px;
-    text-align: center;
   }
 
   .description-row {

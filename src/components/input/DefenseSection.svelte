@@ -124,7 +124,7 @@
   .save-row {
     display: flex;
     gap: var(--spacing-sm);
-    align-items: center;
+    align-items: flex-end;
     padding: var(--spacing-xs) 0;
   }
 
