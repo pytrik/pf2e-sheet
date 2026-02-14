@@ -1,0 +1,45 @@
+# PF2e Character Sheet Builder
+
+A single-page application for creating clean, readable Pathfinder 2nd Edition character sheets. The app compiles to a single HTML file for easy distribution and offline use.
+
+## Overview
+
+The app presents a two-panel interface: an input form on the left and a live A4 sheet preview on the right. Character sheets are divided into two pages — the first covering core stats and skills, the second covering abilities, attacks, and spells.
+
+Key stats (AC, saves, skills, class DC, spell DC, attack bonuses, HP) are auto-calculated from ability modifiers and proficiency levels, with optional misc bonus fields for house rules and item bonuses. The app does not enforce game rules or include game data beyond the standard skill list, making it fully compatible with homebrew content.
+
+## Tech Stack
+
+- **Svelte** — UI framework
+- **TypeScript** — type safety
+- **esbuild** — bundling to a single HTML file
+- **No runtime dependencies** — everything compiles down to one self-contained HTML file
+
+## Features
+
+- Live preview of a two-page A4 character sheet
+- Auto-calculated stats with proficiency selection and misc bonus fields
+- Full PF2e skill list with automatic bonus calculation
+- Abilities list with type tags and optional level indicators
+- Attack entries with auto-calculated bonuses
+- Full spell support (tradition, DC, attack, slots, entries per level)
+- Auto-calculated HP (class + CON + ancestry + extras)
+- localStorage auto-save with JSON export/import
+- Browser-native printing with print-optimized CSS
+- Clean, minimal sheet design with polished input UI
+
+## Getting Started
+
+```bash
+npm install
+npm run dev      # development server with hot reload
+npm run build    # production build → dist/index.html
+```
+
+## Usage
+
+1. Open the app in a browser
+2. Fill in character details using the input form on the left
+3. Preview the rendered sheet on the right in real time
+4. Use **Export** to save character data as JSON, **Import** to load it back
+5. Print via Ctrl+P — the preview is styled for clean A4 output
