@@ -4,7 +4,6 @@
   import type { AbilityEntry } from '../../types/character';
   import {
     character,
-    computedAttacks,
     computedSpellDC,
     computedSpellAttack,
   } from '../../stores/character';
@@ -47,35 +46,6 @@
 </script>
 
 <div class="sheet-page">
-  <!-- Attacks -->
-  <h2>Attacks</h2>
-  {#if $computedAttacks.length > 0}
-    <table class="attacks-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Actions</th>
-          <th>Attack</th>
-          <th>Damage</th>
-          <th>Traits</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each $computedAttacks as atk}
-          <tr>
-            <td>{atk.name}</td>
-            <td>{atk.actions ? formatActions(atk.actions) : '--'}</td>
-            <td class="attack-bonus">{signedNumber(atk.totalBonus)}</td>
-            <td>{atk.damage || '--'}</td>
-            <td class="attack-traits">{atk.traits || '--'}</td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
-  {:else}
-    <p class="empty-state">No attacks added</p>
-  {/if}
-
   <!-- Abilities -->
   <h2>Abilities</h2>
   {#if sortedAbilities.length > 0}

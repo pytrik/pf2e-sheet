@@ -10,8 +10,9 @@
     computedPerception,
     computedClassDC,
     computedSkills,
+    computedAttacks,
   } from '../../stores/character';
-  import { signedNumber } from '../../utils/format';
+  import { signedNumber, formatActions } from '../../utils/format';
 
   const abilityKeys: Ability[] = [
     Ability.STR,
@@ -105,6 +106,35 @@
     </div>
   {:else}
     <p class="empty-state">No skills configured</p>
+  {/if}
+
+  <!-- Attacks -->
+  <h2>Attacks</h2>
+  {#if $computedAttacks.length > 0}
+    <table class="attacks-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Actions</th>
+          <th>Attack</th>
+          <th>Damage</th>
+          <th>Traits</th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each $computedAttacks as atk}
+          <tr>
+            <td>{atk.name}</td>
+            <td>{atk.actions ? formatActions(atk.actions) : '--'}</td>
+            <td class="attack-bonus">{signedNumber(atk.totalBonus)}</td>
+            <td>{atk.damage || '--'}</td>
+            <td class="attack-traits">{atk.traits || '--'}</td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  {:else}
+    <p class="empty-state">No attacks added</p>
   {/if}
 
   <!-- Languages -->
