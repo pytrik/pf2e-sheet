@@ -3,12 +3,20 @@ import sveltePlugin from 'esbuild-svelte';
 import sveltePreprocess from 'svelte-preprocess';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 
+const debug = process.argv.includes('--debug');
+
 await esbuild.build({
   entryPoints: ['src/main.ts'],
   bundle: true,
   outfile: 'dist/bundle.js',
   format: 'iife',
-  minify: true,
+  // Granular minification — minifyWhitespace is disabled because it converts
+  // string literals like "\n   text" into template literals with real newline
+  // characters (`↵   text`). While valid JS, this breaks inline <script> parsing
+  // in Firefox when the bundle is inlined into the single-file HTML output.
+  minifyWhitespace: false,
+  minifyIdentifiers: !debug,
+  minifySyntax: !debug,
   plugins: [
     sveltePlugin({
       preprocess: sveltePreprocess(),
@@ -33,4 +41,4 @@ html = html.replace('<!-- STYLE -->', css);
 
 mkdirSync('dist', { recursive: true });
 writeFileSync('dist/index.html', html);
-console.log('Built dist/index.html');
+console.log(`Built dist/index.html (${debug ? 'debug' : 'minified'})`);
