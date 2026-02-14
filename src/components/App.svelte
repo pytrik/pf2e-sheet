@@ -52,7 +52,7 @@
 
 <div class="app">
   <header class="toolbar" data-print-hide>
-    <h1>PF2e Character Sheet <a href="https://github.com/pytrik/pf2e-sheet" target="_blank" class="title-link">GitHub</a></h1>
+    <h1>PF2e Character Sheet <span class="version">v1.3.0</span> <a href="https://github.com/pytrik/pf2e-sheet" target="_blank" class="title-link">GitHub</a></h1>
     <div class="toolbar-actions">
       <button on:click={handleNew} class="secondary"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg> New</button>
       <button on:click={handleExport} class="secondary"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export</button>
@@ -77,6 +77,7 @@
     <ul>
       <li>Stats, saves, skills, and attack bonuses are <strong>auto-calculated</strong> from ability modifiers and proficiency.</li>
       <li>Your character is <strong>auto-saved</strong> in the browser. Use Export/Import to back up or transfer as JSON.</li>
+      <li>Click <strong>Share</strong> to copy a link that contains your character — anyone who opens it will see your sheet, no file transfer needed.</li>
       <li>Press <strong>Ctrl+P</strong> (or the Print button) to print — only the sheet pages are printed.</li>
     </ul>
     <button on:click={() => helpDialog.close()}>Close</button>
@@ -142,6 +143,13 @@
 
   .toolbar-actions button:hover {
     background: rgba(255, 255, 255, 0.15);
+  }
+
+  .version {
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.5);
+    margin-left: 4px;
   }
 
   .title-link {
