@@ -8,11 +8,25 @@
     computedSpellDC,
     computedSpellAttack,
   } from '../../stores/character';
-  import { signedNumber } from '../../utils/format';
+  import { signedNumber, formatActions } from '../../utils/format';
 
-  /** Sort abilities by level (nulls last) then by name. */
+  function actionCost(actions: string): number {
+    if (!actions) return Infinity;
+    if (/^(f|free|r|reaction)$/i.test(actions)) return 0;
+    const n = Number(actions);
+    if (n >= 1 && n <= 3) return n;
+    return 4;
+  }
+
+  /** Sort abilities: action-users first, then by cost, level, name. */
   function sortAbilities(list: AbilityEntry[]): AbilityEntry[] {
     return [...list].sort((a, b) => {
+      const aHas = a.actions ? 0 : 1;
+      const bHas = b.actions ? 0 : 1;
+      if (aHas !== bHas) return aHas - bHas;
+      const aCost = actionCost(a.actions);
+      const bCost = actionCost(b.actions);
+      if (aCost !== bCost) return aCost - bCost;
       const aLvl = a.level ?? Infinity;
       const bLvl = b.level ?? Infinity;
       if (aLvl !== bLvl) return aLvl - bLvl;
@@ -50,7 +64,7 @@
         {#each $computedAttacks as atk}
           <tr>
             <td>{atk.name}</td>
-            <td>{atk.actions || '--'}</td>
+            <td>{atk.actions ? formatActions(atk.actions) : '--'}</td>
             <td class="attack-bonus">{signedNumber(atk.totalBonus)}</td>
             <td>{atk.damage || '--'}</td>
             <td class="attack-traits">{atk.traits || '--'}</td>
@@ -75,7 +89,7 @@
               <span class="badge">Lvl {entry.level}</span>
             {/if}
             {#if entry.actions}
-              <span class="ability-entry-actions">{entry.actions}</span>
+              <span class="ability-entry-actions">{formatActions(entry.actions)}</span>
             {/if}
           </div>
           {#if entry.description}
@@ -120,7 +134,7 @@
               <div class="spell-entry">
                 <span class="spell-entry-name">{spell.name}</span>
                 {#if spell.actions}
-                  <span class="spell-entry-actions">{spell.actions}</span>
+                  <span class="spell-entry-actions">{formatActions(spell.actions)}</span>
                 {/if}
                 {#if spell.description}
                   <div class="spell-entry-description">{spell.description}</div>

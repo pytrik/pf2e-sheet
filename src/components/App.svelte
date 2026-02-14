@@ -43,6 +43,7 @@
       <button on:click={handleNew} class="secondary">New</button>
       <button on:click={handleExport} class="secondary">Export JSON</button>
       <button on:click={handleImport} class="secondary">Import JSON</button>
+      <button on:click={() => window.print()} class="secondary">Print</button>
       <input
         type="file"
         accept=".json"
@@ -50,6 +51,7 @@
         on:change={handleFileSelected}
         hidden
       />
+      <a href="https://github.com/pytrik/pf2e-sheet" target="_blank" class="toolbar-link">GitHub</a>
     </div>
   </header>
   <div class="panels">
@@ -98,6 +100,19 @@
   }
 
   .toolbar-actions button:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .toolbar-link {
+    color: white;
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: var(--radius);
+    text-decoration: none;
+  }
+
+  .toolbar-link:hover {
     background: rgba(255, 255, 255, 0.15);
   }
 

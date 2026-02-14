@@ -41,11 +41,11 @@
     <div class="ability-entry">
       <div class="ability-row">
         <div class="field grow">
-          {#if i === 0}<label>Name</label>{/if}
+          {#if i === 0}<span class="column-header">Name</span>{/if}
           <input type="text" bind:value={entry.name} placeholder="Ability / Feat name" />
         </div>
         <div class="field">
-          {#if i === 0}<label>Act</label>{/if}
+          {#if i === 0}<span class="column-header">Act</span>{/if}
           <input
             type="text"
             bind:value={entry.actions}
@@ -54,7 +54,7 @@
           />
         </div>
         <div class="field">
-          {#if i === 0}<label>Type</label>{/if}
+          {#if i === 0}<span class="column-header">Type</span>{/if}
           <select bind:value={entry.type}>
             {#each abilityTypes as t}
               <option value={t}>{t}</option>
@@ -62,7 +62,7 @@
           </select>
         </div>
         <div class="field">
-          {#if i === 0}<label>Lvl</label>{/if}
+          {#if i === 0}<span class="column-header">Lvl</span>{/if}
           <input
             type="number"
             value={entry.level ?? ''}
@@ -74,7 +74,7 @@
           />
         </div>
         <div class="field">
-          {#if i === 0}<label>&nbsp;</label>{/if}
+          {#if i === 0}<span class="column-header">&nbsp;</span>{/if}
           <button type="button" class="remove-btn" on:click={() => removeAbility(entry.id)}>
             &times;
           </button>
@@ -131,7 +131,7 @@
     flex-direction: column;
   }
 
-  .field label {
+  .column-header {
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--color-text-muted);

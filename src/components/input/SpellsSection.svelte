@@ -33,8 +33,9 @@
     <h4>Spellcasting</h4>
     <div class="config-row">
       <div class="field">
-        <label>Tradition</label>
+        <label for="spell-tradition">Tradition</label>
         <input
+          id="spell-tradition"
           type="text"
           bind:value={$character.spellcasting.tradition}
           placeholder="Arcane, Divine..."
@@ -43,16 +44,16 @@
       </div>
       <AbilitySelect label="Ability" bind:value={$character.spellcasting.ability} />
       <div class="field">
-        <label>Proficiency</label>
+        <span class="column-header">Proficiency</span>
         <ProficiencySelector bind:value={$character.spellcasting.proficiency} />
       </div>
       <NumberInput label="Misc" bind:value={$character.spellcasting.miscBonus} width="50px" />
       <div class="field">
-        <label>Spell DC</label>
+        <span class="column-header">Spell DC</span>
         <div class="computed-value">{$computedSpellDC}</div>
       </div>
       <div class="field">
-        <label>Spell Attack</label>
+        <span class="column-header">Spell Attack</span>
         <div class="computed-value">{signedNumber($computedSpellAttack)}</div>
       </div>
     </div>
@@ -79,11 +80,11 @@
               <div class="spell-entry">
                 <div class="spell-row">
                   <div class="field grow">
-                    {#if i === 0}<label>Name</label>{/if}
+                    {#if i === 0}<span class="column-header">Name</span>{/if}
                     <input type="text" bind:value={spell.name} placeholder="Spell name" />
                   </div>
                   <div class="field">
-                    {#if i === 0}<label>Act</label>{/if}
+                    {#if i === 0}<span class="column-header">Act</span>{/if}
                     <input
                       type="text"
                       bind:value={spell.actions}
@@ -92,7 +93,7 @@
                     />
                   </div>
                   <div class="field">
-                    {#if i === 0}<label>&nbsp;</label>{/if}
+                    {#if i === 0}<span class="column-header">&nbsp;</span>{/if}
                     <button
                       type="button"
                       class="remove-btn"
@@ -159,7 +160,7 @@
     flex-direction: column;
   }
 
-  .field label {
+  .column-header {
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--color-text-muted);

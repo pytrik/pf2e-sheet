@@ -34,11 +34,11 @@
     <div class="attack-entry">
       <div class="attack-row">
         <div class="field grow">
-          {#if i === 0}<label>Name</label>{/if}
+          {#if i === 0}<span class="column-header">Name</span>{/if}
           <input type="text" bind:value={attack.name} placeholder="Attack name" />
         </div>
         <div class="field">
-          {#if i === 0}<label>Act</label>{/if}
+          {#if i === 0}<span class="column-header">Act</span>{/if}
           <input
             type="text"
             bind:value={attack.actions}
@@ -47,27 +47,27 @@
           />
         </div>
         <div class="field">
-          {#if i === 0}<label>Ability</label>{/if}
+          {#if i === 0}<span class="column-header">Ability</span>{/if}
           <AbilitySelect bind:value={attack.ability} />
         </div>
         <div class="field">
-          {#if i === 0}<label>Prof</label>{/if}
+          {#if i === 0}<span class="column-header">Prof</span>{/if}
           <ProficiencySelector bind:value={attack.proficiency} />
         </div>
         <div class="field">
-          {#if i === 0}<label>Item</label>{/if}
+          {#if i === 0}<span class="column-header">Item</span>{/if}
           <NumberInput bind:value={attack.itemBonus} width="50px" min={0} />
         </div>
         <div class="field">
-          {#if i === 0}<label>Misc</label>{/if}
+          {#if i === 0}<span class="column-header">Misc</span>{/if}
           <NumberInput bind:value={attack.miscBonus} width="50px" />
         </div>
         <div class="field">
-          {#if i === 0}<label>Total</label>{/if}
+          {#if i === 0}<span class="column-header">Total</span>{/if}
           <div class="computed-value">{signedNumber(computed?.totalBonus ?? 0)}</div>
         </div>
         <div class="field">
-          {#if i === 0}<label>Damage</label>{/if}
+          {#if i === 0}<span class="column-header">Damage</span>{/if}
           <input
             type="text"
             bind:value={attack.damage}
@@ -76,11 +76,11 @@
           />
         </div>
         <div class="field grow">
-          {#if i === 0}<label>Traits</label>{/if}
+          {#if i === 0}<span class="column-header">Traits</span>{/if}
           <input type="text" bind:value={attack.traits} placeholder="Traits" />
         </div>
         <div class="field">
-          {#if i === 0}<label>&nbsp;</label>{/if}
+          {#if i === 0}<span class="column-header">&nbsp;</span>{/if}
           <button type="button" class="remove-btn" on:click={() => removeAttack(attack.id)}>
             &times;
           </button>
@@ -120,7 +120,7 @@
     flex-direction: column;
   }
 
-  .field label {
+  .column-header {
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--color-text-muted);

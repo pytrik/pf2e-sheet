@@ -2,6 +2,7 @@
   "name": "pf2e-sheet",
   "version": "1.0.0",
   "description": "A single-page application for creating clean, readable Pathfinder 2nd Edition character sheets. The app compiles to a single HTML file for easy distribution and offline use.",
+  "license": "MIT",
   "private": true,
   "type": "module",
   "scripts": {
