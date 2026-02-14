@@ -1,0 +1,50 @@
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  html, body {
+    background: #fff !important;
+    height: auto !important;
+  }
+
+  /* Hide UI chrome using data attributes */
+  [data-print-hide] {
+    display: none !important;
+  }
+
+  /* Reset any scale transform the preview applies on screen */
+  [data-preview-panel] {
+    overflow: visible !important;
+    padding: 0 !important;
+    background: none !important;
+  }
+
+  [data-scale-wrapper] {
+    transform: none !important;
+    width: auto !important;
+  }
+
+  .sheet-page {
+    width: 210mm;
+    min-height: 297mm;
+    page-break-after: always;
+    margin: 0;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  .sheet-page h2,
+  .sheet-page h3 {
+    page-break-after: avoid;
+  }
+
+  .ability-entry {
+    page-break-inside: avoid;
+  }
+
+  .attacks-table tr {
+    page-break-inside: avoid;
+  }
+}

@@ -1,0 +1,296 @@
+/* ============================================================
+   PF2e Character Sheet – A4 Preview Styles
+   ============================================================ */
+
+/* --- Page --- */
+.sheet-page {
+  width: 210mm;
+  min-height: 297mm;
+  background: #fff;
+  padding: 10mm;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 10pt;
+  color: #111;
+  line-height: 1.35;
+  page-break-after: always;
+  box-sizing: border-box;
+}
+
+/* --- Typography --- */
+.sheet-page h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0 0 2mm;
+  letter-spacing: 0.02em;
+}
+
+.sheet-page h2 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1.5px solid #222;
+  padding-bottom: 1mm;
+  margin: 4mm 0 2mm;
+}
+
+.sheet-page h3 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 2mm 0 1mm;
+}
+
+/* --- Header row (identity line) --- */
+.sheet-header {
+  display: flex;
+  align-items: baseline;
+  gap: 3mm;
+  flex-wrap: wrap;
+  margin-bottom: 3mm;
+}
+
+.sheet-header .identity-detail {
+  font-size: 0.85rem;
+  color: #444;
+}
+
+.sheet-header .identity-detail strong {
+  color: #111;
+}
+
+/* --- Ability modifier row --- */
+.ability-row {
+  display: flex;
+  gap: 2mm;
+  justify-content: space-between;
+  margin-bottom: 3mm;
+}
+
+.ability-box {
+  text-align: center;
+  min-width: 12mm;
+}
+
+.ability-box .ability-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #555;
+}
+
+.ability-box .ability-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: 'Consolas', 'Monaco', monospace;
+}
+
+/* --- Stat block (generic label + value rows) --- */
+.stat-block {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1mm 5mm;
+  margin-bottom: 2mm;
+}
+
+.stat-block .stat-item {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5mm;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.stat-value {
+  font-weight: 700;
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 0.9rem;
+}
+
+/* --- Skills grid (2-column) --- */
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8mm 6mm;
+}
+
+.skill-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.3mm 0;
+  border-bottom: 0.5px dotted #ccc;
+}
+
+.skill-row .skill-name {
+  font-size: 0.78rem;
+}
+
+.skill-row .skill-name.lore {
+  font-style: italic;
+}
+
+.skill-row .skill-value {
+  font-weight: 700;
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 0.82rem;
+  min-width: 8mm;
+  text-align: right;
+}
+
+/* --- Languages --- */
+.languages-list {
+  font-size: 0.78rem;
+  color: #333;
+  margin-top: 1mm;
+}
+
+/* --- Attacks table --- */
+.attacks-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  margin-bottom: 2mm;
+}
+
+.attacks-table th {
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #555;
+  border-bottom: 1px solid #333;
+  padding: 1mm 1.5mm;
+}
+
+.attacks-table td {
+  padding: 1mm 1.5mm;
+  border-bottom: 0.5px solid #ddd;
+  vertical-align: top;
+}
+
+.attacks-table .attack-bonus {
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-weight: 700;
+}
+
+.attacks-table .attack-traits {
+  font-size: 0.7rem;
+  color: #555;
+  font-style: italic;
+}
+
+/* --- Abilities list --- */
+.abilities-list {
+  margin-bottom: 2mm;
+}
+
+.ability-entry {
+  margin-bottom: 2mm;
+  padding-bottom: 1.5mm;
+  border-bottom: 0.5px solid #eee;
+}
+
+.ability-entry:last-child {
+  border-bottom: none;
+}
+
+.ability-entry-header {
+  display: flex;
+  align-items: baseline;
+  gap: 2mm;
+  flex-wrap: wrap;
+}
+
+.ability-entry-name {
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+
+.ability-entry-actions {
+  font-size: 0.75rem;
+  color: #444;
+}
+
+.ability-entry-description {
+  font-size: 0.75rem;
+  color: #333;
+  margin-top: 0.5mm;
+  line-height: 1.3;
+}
+
+/* --- Spells section --- */
+.spells-section {
+  margin-bottom: 2mm;
+}
+
+.spell-level-block {
+  margin-bottom: 2mm;
+}
+
+.spell-level-header {
+  display: flex;
+  align-items: baseline;
+  gap: 2mm;
+  margin-bottom: 1mm;
+}
+
+.spell-level-header h3 {
+  margin: 0;
+}
+
+.spell-slots {
+  font-size: 0.7rem;
+  color: #555;
+}
+
+.spell-entry {
+  margin-bottom: 1mm;
+  padding-left: 3mm;
+}
+
+.spell-entry-name {
+  font-weight: 700;
+  font-size: 0.78rem;
+}
+
+.spell-entry-actions {
+  font-size: 0.72rem;
+  color: #444;
+}
+
+.spell-entry-description {
+  font-size: 0.72rem;
+  color: #333;
+  margin-top: 0.3mm;
+  line-height: 1.3;
+}
+
+/* --- Badge (type / level) --- */
+.badge {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: #eee;
+  color: #555;
+  border: 0.5px solid #ccc;
+  border-radius: 3px;
+  padding: 0.2mm 1.5mm;
+  vertical-align: baseline;
+  line-height: 1.4;
+}
+
+/* --- Empty state --- */
+.empty-state {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: #999;
+  padding: 2mm 0;
+}
