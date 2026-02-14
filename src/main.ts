@@ -1,8 +1,10 @@
 import App from './components/App.svelte';
-import { loadCharacter, initAutoSave } from './stores/persistence';
+import { loadCharacter, loadCharacterFromHash, initAutoSave } from './stores/persistence';
 
 loadCharacter();
-initAutoSave();
+loadCharacterFromHash().then(() => {
+  initAutoSave();
+});
 
 const app = new App({
   target: document.getElementById('app')!,

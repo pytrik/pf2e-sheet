@@ -5,10 +5,23 @@
   import InputPanel from './input/InputPanel.svelte';
   import PreviewPanel from './preview/PreviewPanel.svelte';
   import { character } from '../stores/character';
-  import { exportCharacter, importCharacter, resetCharacter } from '../stores/persistence';
+  import { exportCharacter, importCharacter, resetCharacter, compressCharacter } from '../stores/persistence';
 
   let fileInput: HTMLInputElement;
   let helpDialog: HTMLDialogElement;
+  let shareLabel = 'Share';
+
+  async function handleShare() {
+    try {
+      const compressed = await compressCharacter($character);
+      const url = `${window.location.origin}${window.location.pathname}#char=${compressed}`;
+      await navigator.clipboard.writeText(url);
+      shareLabel = 'Copied!';
+      setTimeout(() => { shareLabel = 'Share'; }, 2000);
+    } catch {
+      alert('Failed to copy share link to clipboard.');
+    }
+  }
 
   function handleExport() {
     exportCharacter($character);
@@ -44,6 +57,7 @@
       <button on:click={handleNew} class="secondary">New</button>
       <button on:click={handleExport} class="secondary">Export JSON</button>
       <button on:click={handleImport} class="secondary">Import JSON</button>
+      <button on:click={handleShare} class="secondary">{shareLabel}</button>
       <button on:click={() => window.print()} class="secondary">Print</button>
       <input
         type="file"

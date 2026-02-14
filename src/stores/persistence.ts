@@ -68,3 +68,78 @@ export function importCharacter(file: File): Promise<void> {
 export function resetCharacter(): void {
   character.set(createDefaultCharacter());
 }
+
+export async function compressCharacter(data: CharacterData): Promise<string> {
+  const json = new TextEncoder().encode(JSON.stringify(data));
+  const cs = new CompressionStream('deflate-raw');
+  const writer = cs.writable.getWriter();
+  writer.write(json);
+  writer.close();
+  const chunks: Uint8Array[] = [];
+  const reader = cs.readable.getReader();
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value);
+  }
+  const compressed = new Uint8Array(chunks.reduce((n, c) => n + c.length, 0));
+  let offset = 0;
+  for (const chunk of chunks) {
+    compressed.set(chunk, offset);
+    offset += chunk.length;
+  }
+  // base64url: +/ → -_, strip padding =
+  return btoa(String.fromCharCode(...compressed))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '');
+}
+
+export async function decompressCharacter(encoded: string): Promise<CharacterData | null> {
+  try {
+    // base64url decode: -_ → +/, restore padding
+    const b64 = encoded.replace(/-/g, '+').replace(/_/g, '/');
+    const padded = b64 + '='.repeat((4 - (b64.length % 4)) % 4);
+    const binary = atob(padded);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+
+    const ds = new DecompressionStream('deflate-raw');
+    const writer = ds.writable.getWriter();
+    writer.write(bytes);
+    writer.close();
+    const chunks: Uint8Array[] = [];
+    const reader = ds.readable.getReader();
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      chunks.push(value);
+    }
+    const decompressed = new Uint8Array(chunks.reduce((n, c) => n + c.length, 0));
+    let offset = 0;
+    for (const chunk of chunks) {
+      decompressed.set(chunk, offset);
+      offset += chunk.length;
+    }
+    const json = new TextDecoder().decode(decompressed);
+    const data = JSON.parse(json) as CharacterData;
+    if (data.version !== CURRENT_VERSION) return null;
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+export async function loadCharacterFromHash(): Promise<void> {
+  const hash = window.location.hash;
+  const prefix = '#char=';
+  if (!hash.startsWith(prefix)) return;
+  const encoded = hash.slice(prefix.length);
+  if (!encoded) return;
+  const data = await decompressCharacter(encoded);
+  if (data) {
+    character.set(data);
+  }
+  // Clear hash to avoid re-importing on refresh
+  history.replaceState(null, '', window.location.pathname + window.location.search);
+}
