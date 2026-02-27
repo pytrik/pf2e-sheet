@@ -58,10 +58,7 @@
       <button on:click={handleExport} class="secondary"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export</button>
       <button on:click={handleImport} class="secondary"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Import</button>
       <button on:click={handleShare} class="secondary"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> {shareLabel}</button>
-      <select bind:value={$renderMode} class="mode-select">
-        <option value="standard">Standard</option>
-        <option value="dense">Dense</option>
-      </select>
+      <button on:click={() => $renderMode = $renderMode === 'standard' ? 'dense' : 'standard'} class="secondary">{$renderMode === 'standard' ? 'Standard' : 'Dense'}</button>
       <button on:click={() => window.print()} class="secondary"><svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> Print</button>
       <input
         type="file"
@@ -149,20 +146,6 @@
     background: rgba(255, 255, 255, 0.15);
   }
 
-  .mode-select {
-    background: transparent;
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: var(--radius);
-    font-size: 0.8rem;
-    padding: 4px 8px;
-    cursor: pointer;
-  }
-
-  .mode-select option {
-    background: #fff;
-    color: #222;
-  }
 
   .version {
     font-size: 0.7rem;
