@@ -51,4 +51,22 @@
   .items-table tr {
     page-break-inside: avoid;
   }
+
+  .dense {
+    columns: 2;
+    column-gap: 5mm;
+  }
+
+  .dense .sheet-page {
+    width: auto;
+    min-height: auto;
+    page-break-after: auto;
+  }
+
+  .dense .ability-entry,
+  .dense .spell-level-block,
+  .dense .attacks-table tr,
+  .dense .items-table tr {
+    break-inside: avoid;
+  }
 }

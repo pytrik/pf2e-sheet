@@ -47,8 +47,8 @@
 
 <div class="sheet-page">
   <!-- Abilities -->
-  <h2>Abilities</h2>
   {#if sortedAbilities.length > 0}
+    <h2>Abilities</h2>
     <div class="abilities-list">
       {#each sortedAbilities as entry}
         <div class="ability-entry">
@@ -68,13 +68,11 @@
         </div>
       {/each}
     </div>
-  {:else}
-    <p class="empty-state">No abilities added</p>
   {/if}
 
   <!-- Spells -->
-  <h2>Spells</h2>
   {#if hasSpellcasting}
+    <h2>Spells</h2>
     <div class="spells-section">
       <div class="stat-block">
         <div class="stat-item">
@@ -113,17 +111,13 @@
             {/each}
           </div>
         {/each}
-      {:else}
-        <p class="empty-state">No spells added</p>
       {/if}
     </div>
-  {:else}
-    <p class="empty-state">No spellcasting tradition set</p>
   {/if}
 
   <!-- Items -->
-  <h2>Items</h2>
   {#if $character.items.length > 0}
+    <h2>Items</h2>
     <table class="items-table">
       <thead>
         <tr>
@@ -151,7 +145,5 @@
         {/each}
       </tbody>
     </table>
-  {:else}
-    <p class="empty-state">No items added</p>
   {/if}
 </div>

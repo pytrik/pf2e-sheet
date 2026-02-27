@@ -2,6 +2,7 @@
   import { Ability } from '../../types/constants';
   import {
     character,
+    renderMode,
     computedAC,
     computedFortitude,
     computedReflex,
@@ -109,8 +110,8 @@
   {/if}
 
   <!-- Attacks -->
-  <h2>Attacks</h2>
   {#if $computedAttacks.length > 0}
+    <h2>Attacks</h2>
     <table class="attacks-table">
       <thead>
         <tr>
@@ -133,19 +134,17 @@
         {/each}
       </tbody>
     </table>
-  {:else}
-    <p class="empty-state">No attacks added</p>
   {/if}
 
   <!-- Languages -->
-  <h2>Languages</h2>
   {#if $character.languages.length > 0}
+    <h2>Languages</h2>
     <p class="languages-list">{$character.languages.join(', ')}</p>
-  {:else}
-    <p class="empty-state">No languages added</p>
   {/if}
 
-  <!-- Notes -->
-  <h2>Notes</h2>
-  <p class="notes-line">Current HP: {$computedHP}</p>
+  <!-- Notes (standard mode only) -->
+  {#if $renderMode !== 'dense'}
+    <h2>Notes</h2>
+    <p class="notes-line">Current HP: {$computedHP}</p>
+  {/if}
 </div>

@@ -1,6 +1,7 @@
 <script lang="ts">
   import SheetPage1 from './SheetPage1.svelte';
   import SheetPage2 from './SheetPage2.svelte';
+  import { renderMode } from '../../stores/character';
 
   /** The A4 width in px at 96 dpi (210 mm). */
   const A4_WIDTH_PX = 794;
@@ -16,6 +17,7 @@
 <div class="preview-panel" data-preview-panel bind:clientWidth={containerWidth}>
   <div
     class="sheet-scale-wrapper"
+    class:dense={$renderMode === 'dense'}
     data-scale-wrapper
     style="transform: scale({scale}); transform-origin: top left; width: {A4_WIDTH_PX}px;"
   >

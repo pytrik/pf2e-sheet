@@ -72,6 +72,9 @@ export function createDefaultCharacter(): CharacterData {
 
 export const character = writable<CharacterData>(createDefaultCharacter());
 
+export type RenderMode = 'standard' | 'dense';
+export const renderMode = writable<RenderMode>('standard');
+
 export const computedAC = derived(character, ($c) =>
   calcAC($c.armorClass, $c.abilities, $c.level),
 );
