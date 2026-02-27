@@ -81,6 +81,16 @@ export interface ClassDC {
   miscBonus: number;
 }
 
+export interface ItemEntry {
+  id: string;
+  name: string;
+  weight: number | null;
+  value: number | null;
+  amount: number | null;
+  uses: number | null;
+  description: string;
+}
+
 export interface CharacterData {
   version: number;
   name: string;
@@ -108,4 +118,5 @@ export interface CharacterData {
   attacks: AttackEntry[];
   abilities_list: AbilityEntry[];
   spellcasting: SpellcastingConfig;
+  items: ItemEntry[];
 }

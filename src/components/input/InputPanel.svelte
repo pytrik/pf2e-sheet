@@ -10,6 +10,7 @@
   import AttacksSection from './AttacksSection.svelte';
   import AbilitiesSection from './AbilitiesSection.svelte';
   import SpellsSection from './SpellsSection.svelte';
+  import ItemsSection from './ItemsSection.svelte';
 </script>
 
 <div class="input-panel">
@@ -51,6 +52,10 @@
 
   <CollapsibleSection title="Spellcasting">
     <SpellsSection />
+  </CollapsibleSection>
+
+  <CollapsibleSection title="Items">
+    <ItemsSection />
   </CollapsibleSection>
 </div>
 

@@ -47,4 +47,8 @@
   .attacks-table tr {
     page-break-inside: avoid;
   }
+
+  .items-table tr {
+    page-break-inside: avoid;
+  }
 }

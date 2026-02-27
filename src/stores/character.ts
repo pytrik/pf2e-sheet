@@ -66,6 +66,7 @@ export function createDefaultCharacter(): CharacterData {
       miscBonus: 0,
       spellLevels: createDefaultSpellLevels(),
     },
+    items: [],
   };
 }
 

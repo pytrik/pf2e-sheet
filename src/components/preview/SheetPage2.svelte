@@ -1,7 +1,7 @@
 <script lang="ts">
   import { SPELL_LEVELS, SPELL_LEVEL_LABELS } from '../../types/constants';
   import type { SpellLevel } from '../../types/constants';
-  import type { AbilityEntry } from '../../types/character';
+  import type { AbilityEntry, ItemEntry } from '../../types/character';
   import {
     character,
     computedSpellDC,
@@ -119,5 +119,39 @@
     </div>
   {:else}
     <p class="empty-state">No spellcasting tradition set</p>
+  {/if}
+
+  <!-- Items -->
+  <h2>Items</h2>
+  {#if $character.items.length > 0}
+    <table class="items-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Wt</th>
+          <th>Val</th>
+          <th>Amt</th>
+          <th>Uses</th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each $character.items as item}
+          <tr>
+            <td class="item-name">{item.name}</td>
+            <td class="item-num">{item.weight ?? '—'}</td>
+            <td class="item-num">{item.value ?? '—'}</td>
+            <td class="item-num">{item.amount ?? '—'}</td>
+            <td class="item-num">{item.uses ?? '—'}</td>
+          </tr>
+          {#if item.description}
+            <tr>
+              <td colspan="5" class="item-description">{item.description}</td>
+            </tr>
+          {/if}
+        {/each}
+      </tbody>
+    </table>
+  {:else}
+    <p class="empty-state">No items added</p>
   {/if}
 </div>

@@ -169,6 +169,19 @@ Spell slots per level (cantrips, 1st–10th):
   | Actions    | string | (Free text: 1, 2, 3, free, reaction, etc.) |
   | Description| string | Brief description or notes |
 
+### 3.4 Items
+A flat, ordered list of item entries. Items are displayed after spells on page 2 and overflow to a new page if needed. Items are displayed in manual order (the order the user adds/arranges them).
+
+Each item has:
+| Field       | Type   | Required | Notes                                              |
+|------------|--------|----------|-----------------------------------------------------|
+| Name       | string | yes      | Item name                                           |
+| Weight     | number | no       | Bulk/weight value (raw number)                      |
+| Value      | number | no       | Monetary value (raw number, user interprets unit)    |
+| Amount     | number | no       | Quantity carried (e.g., 5 arrows)                   |
+| Uses       | number | no       | Remaining uses for consumables (e.g., wand charges). Not for daily-recharge abilities — intended for tracking across a campaign. |
+| Description| string | no       | Free text description or notes                      |
+
 ---
 
 ## 4. Persistence

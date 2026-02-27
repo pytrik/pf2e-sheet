@@ -2,16 +2,25 @@ import { character, createDefaultCharacter } from './character';
 import type { CharacterData } from '../types/character';
 
 const STORAGE_KEY = 'pf2e-character';
-const CURRENT_VERSION = 1;
+const CURRENT_VERSION = 2;
+
+function migrateCharacter(data: Record<string, unknown>): CharacterData | null {
+  const version = data.version as number;
+  if (version === CURRENT_VERSION) return data as unknown as CharacterData;
+  if (version === 1) {
+    (data as Record<string, unknown>).items = [];
+    data.version = CURRENT_VERSION;
+    return data as unknown as CharacterData;
+  }
+  return null;
+}
 
 export function loadCharacter(): void {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
-      const data = JSON.parse(raw) as CharacterData;
-      if (data.version === CURRENT_VERSION) {
-        character.set(data);
-      }
+      const data = migrateCharacter(JSON.parse(raw));
+      if (data) character.set(data);
     }
   } catch {
     // ignore corrupt data
@@ -45,13 +54,14 @@ export function importCharacter(file: File): Promise<void> {
     const reader = new FileReader();
     reader.onload = () => {
       try {
-        const data = JSON.parse(reader.result as string) as CharacterData;
-        if (typeof data.version !== 'number') {
+        const raw = JSON.parse(reader.result as string);
+        if (typeof raw.version !== 'number') {
           reject(new Error('Invalid character file: missing version'));
           return;
         }
-        if (data.version !== CURRENT_VERSION) {
-          reject(new Error(`Unsupported version: ${data.version}`));
+        const data = migrateCharacter(raw);
+        if (!data) {
+          reject(new Error(`Unsupported version: ${raw.version}`));
           return;
         }
         character.set(data);
@@ -122,9 +132,8 @@ export async function decompressCharacter(encoded: string): Promise<CharacterDat
       offset += chunk.length;
     }
     const json = new TextDecoder().decode(decompressed);
-    const data = JSON.parse(json) as CharacterData;
-    if (data.version !== CURRENT_VERSION) return null;
-    return data;
+    const raw = JSON.parse(json);
+    return migrateCharacter(raw);
   } catch {
     return null;
   }
