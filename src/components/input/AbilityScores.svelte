@@ -11,7 +11,6 @@
     <NumberInput
       label={ABILITY_NAMES[ab]}
       bind:value={$character.abilities[ab]}
-      signed
     />
   {/each}
 </div>
