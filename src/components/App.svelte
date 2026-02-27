@@ -228,15 +228,18 @@
   @media (max-width: 1024px) {
     .panels {
       flex-direction: column;
+      overflow: auto;
     }
     .panel-left {
       flex: none;
       max-width: none;
       border-right: none;
-      border-bottom: 1px solid var(--color-border);
+      border-top: 1px solid var(--color-border);
+      order: 2;
     }
     .panel-right {
-      flex: 1;
+      flex: none;
+      order: 1;
     }
   }
 </style>
