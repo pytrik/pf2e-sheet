@@ -39,6 +39,10 @@ Key stats (AC, saves, skills, class DC, spell DC, attack bonuses, HP) are auto-c
 - Browser-native printing with print-optimized CSS
 - Clean, minimal sheet design with toolbar icons
 
+## License
+
+This project is licensed under the [MIT License](LICENSE). You're free to use, copy, modify, distribute, and host this app and its source code for any purpose — including commercial use. The only requirement is that you include the original copyright notice and license text in any copies or substantial portions of the software.
+
 ## Getting Started
 
 ```bash
