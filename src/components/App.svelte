@@ -39,14 +39,21 @@
     alertDialog.showModal();
   }
 
-  async function handleShare() {
+  async function buildShareUrl(): Promise<string | null> {
     if (!isPublicUrl()) {
       showAlert('Share links can only be created when the app is hosted on a public URL. The current address (local file or local network) would not be reachable by others.');
-      return;
+      return null;
     }
+    const compressed = await compressCharacter($character);
+    const url = new URL(window.location.href);
+    url.hash = `char=${compressed}`;
+    return url.toString();
+  }
+
+  async function handleShare() {
     try {
-      const compressed = await compressCharacter($character);
-      const url = `${window.location.origin}${window.location.pathname}#char=${compressed}`;
+      const url = await buildShareUrl();
+      if (!url) return;
       await navigator.clipboard.writeText(url);
       shareLabel = 'Copied!';
       setTimeout(() => { shareLabel = 'Share'; }, 2000);
@@ -88,10 +95,8 @@
   }
 
   async function handleShortLink() {
-    if (!isPublicUrl()) {
-      showAlert('Short links can only be created when the app is hosted on a public URL. The current address (local file or local network) would not be reachable by others.');
-      return;
-    }
+    const fullUrl = await buildShareUrl();
+    if (!fullUrl) return;
 
     const agreed = await showConfirm(
       'This will send your full character sheet URL to an external service (short.io) to generate a short link.\n\n' +
@@ -103,9 +108,6 @@
 
     shortLinkLabel = 'Shortening...';
     try {
-      const compressed = await compressCharacter($character);
-      const fullUrl = `${window.location.origin}${window.location.pathname}#char=${compressed}`;
-
       const res = await fetch('https://api.short.io/links/public', {
         method: 'POST',
         headers: {
@@ -138,7 +140,7 @@
 
 <div class="app">
   <header class="toolbar" data-print-hide>
-    <h1>PF2e Character Sheet <span class="version">v1.6.0</span> <a href="https://github.com/pytrik/pf2e-sheet" target="_blank" class="title-link">GitHub</a></h1>
+    <h1>PF2e Character Sheet <span class="version">v1.6.1</span> <a href="https://github.com/pytrik/pf2e-sheet" target="_blank" class="title-link">GitHub</a></h1>
     <div class="toolbar-actions">
       <button on:click={handleNew} class="secondary"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg> New</button>
       <button on:click={handleExport} class="secondary"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export</button>
