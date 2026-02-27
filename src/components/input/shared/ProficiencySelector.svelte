@@ -34,10 +34,11 @@
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
     overflow: hidden;
+    height: var(--input-height, 28px);
   }
 
   .prof-btn {
-    padding: 3px 7px;
+    padding: 4px 7px;
     font-size: 0.75rem;
     font-weight: 600;
     background: var(--color-input-bg);

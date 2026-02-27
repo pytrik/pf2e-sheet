@@ -19,7 +19,7 @@
           bind:value={$character.languages[i]}
           placeholder="Language"
         />
-        <button class="small danger" type="button" on:click={() => removeLanguage(i)}>
+        <button class="remove-btn" type="button" on:click={() => removeLanguage(i)}>
           &times;
         </button>
       </div>

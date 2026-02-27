@@ -147,22 +147,6 @@
     padding: 4px 0;
   }
 
-  .remove-btn {
-    background: none;
-    border: 1px solid var(--color-danger, #c00);
-    color: var(--color-danger, #c00);
-    border-radius: var(--radius);
-    padding: 2px 8px;
-    font-size: 1rem;
-    line-height: 1;
-    cursor: pointer;
-  }
-
-  .remove-btn:hover {
-    background: var(--color-danger, #c00);
-    color: white;
-  }
-
   .add-btn {
     align-self: flex-start;
     background: none;

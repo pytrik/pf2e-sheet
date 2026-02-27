@@ -76,7 +76,7 @@
         <span class="computed-value">
           {signedNumber($computedSkills[lore.index]?.total ?? 0)}
         </span>
-        <button class="small danger" type="button" on:click={() => removeLore(lore.index)}>
+        <button class="remove-btn" type="button" on:click={() => removeLore(lore.index)}>
           &times;
         </button>
       </div>
