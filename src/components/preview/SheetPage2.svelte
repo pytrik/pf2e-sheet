@@ -1,6 +1,7 @@
 <script lang="ts">
   import { SPELL_LEVELS, SPELL_LEVEL_LABELS } from '../../types/constants';
   import type { SpellLevel } from '../../types/constants';
+  import { PROFICIENCY_LABELS } from '../../types/constants';
   import type { AbilityEntry, ItemEntry } from '../../types/character';
   import {
     character,
@@ -81,11 +82,11 @@
         </div>
         <div class="stat-item">
           <span class="stat-label">Spell DC</span>
-          <span class="stat-value">{$computedSpellDC}</span>
+          <span class="stat-value">{$computedSpellDC} ({PROFICIENCY_LABELS[$character.spellcasting.proficiency]})</span>
         </div>
         <div class="stat-item">
           <span class="stat-label">Spell Attack</span>
-          <span class="stat-value">{signedNumber($computedSpellAttack)}</span>
+          <span class="stat-value">{signedNumber($computedSpellAttack)} ({PROFICIENCY_LABELS[$character.spellcasting.proficiency]})</span>
         </div>
       </div>
 

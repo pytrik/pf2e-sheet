@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Ability } from '../../types/constants';
+  import { Ability, PROFICIENCY_LABELS } from '../../types/constants';
   import {
     character,
     renderMode,
@@ -57,19 +57,19 @@
   <div class="stat-block">
     <div class="stat-item">
       <span class="stat-label">AC</span>
-      <span class="stat-value">{$computedAC}</span>
+      <span class="stat-value">{$computedAC} ({PROFICIENCY_LABELS[$character.armorClass.proficiency]})</span>
     </div>
     <div class="stat-item">
       <span class="stat-label">Fort</span>
-      <span class="stat-value">{signedNumber($computedFortitude)}</span>
+      <span class="stat-value">{signedNumber($computedFortitude)} ({PROFICIENCY_LABELS[$character.savingThrows.fortitude.proficiency]})</span>
     </div>
     <div class="stat-item">
       <span class="stat-label">Ref</span>
-      <span class="stat-value">{signedNumber($computedReflex)}</span>
+      <span class="stat-value">{signedNumber($computedReflex)} ({PROFICIENCY_LABELS[$character.savingThrows.reflex.proficiency]})</span>
     </div>
     <div class="stat-item">
       <span class="stat-label">Will</span>
-      <span class="stat-value">{signedNumber($computedWill)}</span>
+      <span class="stat-value">{signedNumber($computedWill)} ({PROFICIENCY_LABELS[$character.savingThrows.will.proficiency]})</span>
     </div>
     <div class="stat-item">
       <span class="stat-label">HP</span>
@@ -86,11 +86,11 @@
   <div class="stat-block">
     <div class="stat-item">
       <span class="stat-label">Perception</span>
-      <span class="stat-value">{signedNumber($computedPerception)}</span>
+      <span class="stat-value">{signedNumber($computedPerception)} ({PROFICIENCY_LABELS[$character.perception.proficiency]})</span>
     </div>
     <div class="stat-item">
       <span class="stat-label">Class DC</span>
-      <span class="stat-value">{$computedClassDC}</span>
+      <span class="stat-value">{$computedClassDC} ({PROFICIENCY_LABELS[$character.classDC.proficiency]})</span>
     </div>
   </div>
 
@@ -100,7 +100,7 @@
     <div class="skills-grid">
       {#each $computedSkills as skill}
         <div class="skill-row">
-          <span class="skill-name" class:lore={skill.isLore}>{skill.name}</span>
+          <span class="skill-name" class:lore={skill.isLore}>{skill.name} ({skill.ability}, {PROFICIENCY_LABELS[skill.proficiency]})</span>
           <span class="skill-value">{signedNumber(skill.total)}</span>
         </div>
       {/each}
@@ -127,7 +127,7 @@
           <tr>
             <td>{atk.name}</td>
             <td>{atk.actions ? formatActions(atk.actions) : '--'}</td>
-            <td class="attack-bonus">{signedNumber(atk.totalBonus)}</td>
+            <td class="attack-bonus">{signedNumber(atk.totalBonus)} ({PROFICIENCY_LABELS[atk.proficiency]})</td>
             <td>{atk.damage || '--'}</td>
             <td class="attack-traits">{atk.traits || '--'}</td>
           </tr>
