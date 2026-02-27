@@ -77,7 +77,7 @@
     </div>
     <div class="stat-item">
       <span class="stat-label">Speed</span>
-      <span class="stat-value">{$character.speed} ft.</span>
+      <span class="stat-value">{$character.speed} ft</span>
     </div>
   </div>
 
