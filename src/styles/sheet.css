@@ -130,10 +130,6 @@
   font-size: 0.78rem;
 }
 
-.skill-row .skill-name.lore {
-  font-style: italic;
-}
-
 .skill-row .skill-value {
   font-weight: 700;
   font-family: 'Consolas', 'Monaco', monospace;

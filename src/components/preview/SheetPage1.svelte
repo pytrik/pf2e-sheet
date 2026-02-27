@@ -100,7 +100,7 @@
     <div class="skills-grid">
       {#each $computedSkills as skill}
         <div class="skill-row">
-          <span class="skill-name" class:lore={skill.isLore}>{skill.name} ({skill.ability}, {PROFICIENCY_LABELS[skill.proficiency]})</span>
+          <span class="skill-name">{skill.name} ({skill.ability}, {PROFICIENCY_LABELS[skill.proficiency]})</span>
           <span class="skill-value">{signedNumber(skill.total)}</span>
         </div>
       {/each}

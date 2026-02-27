@@ -4,16 +4,17 @@
   import { signedNumber } from '../../utils/format';
   import ProficiencySelector from './shared/ProficiencySelector.svelte';
   import NumberInput from './shared/NumberInput.svelte';
+  import AbilitySelect from './shared/AbilitySelect.svelte';
 
   $: standardSkills = $character.skills
     .map((s, i) => ({ ...s, index: i }))
     .filter((s) => !s.isLore);
 
-  $: loreSkills = $character.skills
+  $: customSkills = $character.skills
     .map((s, i) => ({ ...s, index: i }))
     .filter((s) => s.isLore);
 
-  function addLore() {
+  function addCustomSkill() {
     $character.skills = [
       ...$character.skills,
       {
@@ -26,7 +27,7 @@
     ];
   }
 
-  function removeLore(index: number) {
+  function removeCustomSkill(index: number) {
     $character.skills = $character.skills.filter((_, i) => i !== index);
   }
 </script>
@@ -35,7 +36,7 @@
   <div class="skills-list">
     {#each standardSkills as skill (skill.index)}
       <div class="skill-row">
-        <span class="skill-name">{skill.name}</span>
+        <span class="skill-name">{skill.name} ({skill.ability})</span>
         <ProficiencySelector
           bind:value={$character.skills[skill.index].proficiency}
         />
@@ -51,32 +52,35 @@
     {/each}
   </div>
 
-  <div class="lore-section">
-    <div class="lore-header">
-      <h4>Lore Skills</h4>
-      <button class="small secondary" type="button" on:click={addLore}>+ Add Lore</button>
+  <div class="custom-section">
+    <div class="custom-header">
+      <h4>Custom Skills</h4>
+      <button class="small secondary" type="button" on:click={addCustomSkill}>+ Add Skill</button>
     </div>
-    {#each loreSkills as lore (lore.index)}
+    {#each customSkills as skill (skill.index)}
       <div class="skill-row">
-        <div class="field lore-name">
+        <div class="field custom-name">
           <input
             type="text"
-            bind:value={$character.skills[lore.index].name}
-            placeholder="Lore name"
+            bind:value={$character.skills[skill.index].name}
+            placeholder="Skill name"
           />
         </div>
+        <AbilitySelect
+          bind:value={$character.skills[skill.index].ability}
+        />
         <ProficiencySelector
-          bind:value={$character.skills[lore.index].proficiency}
+          bind:value={$character.skills[skill.index].proficiency}
         />
         <NumberInput
           label=""
-          bind:value={$character.skills[lore.index].miscBonus}
+          bind:value={$character.skills[skill.index].miscBonus}
           width="50px"
         />
         <span class="computed-value">
-          {signedNumber($computedSkills[lore.index]?.total ?? 0)}
+          {signedNumber($computedSkills[skill.index]?.total ?? 0)}
         </span>
-        <button class="remove-btn" type="button" on:click={() => removeLore(lore.index)}>
+        <button class="remove-btn" type="button" on:click={() => removeCustomSkill(skill.index)}>
           &times;
         </button>
       </div>
@@ -115,13 +119,13 @@
     min-width: 100px;
   }
 
-  .lore-section {
+  .custom-section {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-xs);
   }
 
-  .lore-header {
+  .custom-header {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
@@ -129,7 +133,7 @@
     border-bottom: 1px solid var(--color-border);
   }
 
-  .lore-header h4 {
+  .custom-header h4 {
     font-size: 0.85rem;
     color: var(--color-primary);
     margin: 0;
@@ -140,11 +144,11 @@
     flex-direction: column;
   }
 
-  .lore-name {
+  .custom-name {
     min-width: 100px;
   }
 
-  .lore-name input {
+  .custom-name input {
     width: 100%;
   }
 
