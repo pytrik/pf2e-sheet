@@ -33,7 +33,7 @@ Key stats (AC, saves, skills, class DC, spell DC, attack bonuses, HP) are auto-c
 - Full spell support (tradition, DC, attack, slots, entries per level)
 - Item inventory with weight, value, amount, and remaining uses tracking
 - Auto-calculated HP (class + CON + ancestry + extras)
-- Two render modes: **Standard** (spacious two-page A4) and **Dense** (compact two-column layout)
+- Three render modes: **Standard** (spacious two-page A4), **Dense** (compact two-column), and **Mobile** (compact single-column, auto-activates on narrow screens)
 - localStorage auto-save with JSON export/import
 - Share characters via URL — compresses character data into the link, no server needed
 - Browser-native printing with print-optimized CSS

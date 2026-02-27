@@ -206,11 +206,12 @@ Each item has:
 - Empty sections are hidden automatically in all render modes
 
 ### 5.2 Render Modes
-A toolbar toggle switches between two render modes:
+A toolbar button cycles between three render modes:
 | Mode     | Description |
 |----------|-------------|
 | Standard | Spacious two-page A4 layout optimized for readability, with a Notes section and forced page breaks |
 | Dense    | Compact two-column CSS auto-flow layout across a single continuous page. Tighter spacing, descriptions truncated to ~2 lines, no Notes section, no forced page breaks |
+| Mobile   | Compact single-column full-width layout with larger font sizes. No A4 framing or scaling. Full descriptions shown (no truncation). Auto-activates on narrow screens (≤1024px) but can be overridden manually |
 
 ### 5.3 Print
 - Ctrl+P / browser print produces output matching the selected render mode
@@ -240,8 +241,9 @@ A toolbar toggle switches between two render modes:
 
 ### 6.2 Responsiveness
 - Optimized for desktop use (side-by-side panels)
-- Minimum supported width: 1024px
-- Below minimum width, panels may stack vertically
+- Minimum supported width: 1024px (desktop layout)
+- Below 1024px, panels stack vertically with the preview on top
+- Mobile render mode auto-activates on narrow screens for a readable single-column view
 
 ### 6.3 Accessibility
 - Proper form labels and ARIA attributes
@@ -271,4 +273,4 @@ A toolbar toggle switches between two render modes:
 - **No external imports**: no Pathbuilder, Foundry, or other tool integration
 - **No multi-character management**: one character at a time (use export/import to switch)
 - **No server/cloud sync**: entirely local
-- **No mobile optimization**: desktop-first (functional but not optimized on mobile)
+- **No full mobile optimization**: desktop-first, but a dedicated Mobile render mode provides a readable single-column view on narrow screens
