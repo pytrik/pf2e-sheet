@@ -200,14 +200,23 @@ Each item has:
 ## 5. Sheet Preview & Printing
 
 ### 5.1 Preview
-- The right panel shows a scaled-down live preview of the two A4 pages
+- The right panel shows a scaled-down live preview of the sheet
 - Pages are rendered at actual A4 proportions (210mm × 297mm)
 - The preview updates in real time as inputs change
+- Empty sections are hidden automatically in all render modes
 
-### 5.2 Print
-- Ctrl+P / browser print produces a clean two-page A4 document
+### 5.2 Render Modes
+A toolbar toggle switches between two render modes:
+| Mode     | Description |
+|----------|-------------|
+| Standard | Spacious two-page A4 layout optimized for readability, with a Notes section and forced page breaks |
+| Dense    | Compact two-column CSS auto-flow layout across a single continuous page. Tighter spacing, descriptions truncated to ~2 lines, no Notes section, no forced page breaks |
+
+### 5.3 Print
+- Ctrl+P / browser print produces output matching the selected render mode
 - Print CSS hides the input panel and all app chrome
-- Only the sheet pages are printed, at full A4 size
+- **Standard mode**: clean two-page A4 document
+- **Dense mode**: compact two-column layout with natural page flow
 - No headers/footers from the browser (instruct user to disable these if needed)
 
 ### 5.3 Sheet Style

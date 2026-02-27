@@ -79,6 +79,7 @@
       <li>Stats, saves, skills, and attack bonuses are <strong>auto-calculated</strong> from ability modifiers and proficiency.</li>
       <li>Your character is <strong>auto-saved</strong> in the browser. Use Export/Import to back up or transfer as JSON.</li>
       <li>Click <strong>Share</strong> to copy a link that contains your character — anyone who opens it will see your sheet, no file transfer needed.</li>
+      <li>Toggle between <strong>Standard</strong> (spacious, two-page) and <strong>Dense</strong> (compact, two-column) sheet layouts.</li>
       <li>Press <strong>Ctrl+P</strong> (or the Print button) to print — only the sheet pages are printed.</li>
     </ul>
     <button on:click={() => helpDialog.close()}>Close</button>
