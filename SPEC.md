@@ -13,7 +13,7 @@ Two-panel side-by-side layout:
 Both panels share a polished, cohesive visual style.
 
 ### 1.3 No Backend
-The app is entirely client-side. No server, no API calls, no external resources at runtime.
+The app is entirely client-side. No server, no API calls, no external resources at runtime (except the optional Short Link feature, which calls the short.io API).
 
 ---
 
@@ -194,6 +194,10 @@ Each item has:
 - **Export**: download the full character data as a `.json` file
 - **Import**: upload a `.json` file to load a character (replaces current data)
 - The JSON format should be documented and versioned (include a `version` field) for future compatibility
+
+### 4.3 Sharing
+- **Share**: compresses the full character data into the URL hash (`#char=...`) and copies it to the clipboard. No external services involved.
+- **Short Link**: sends the full share URL to short.io to generate a shorter link. Only available when the app is hosted on a public URL (not on `file:`, `localhost`, or private IP ranges). A confirmation dialog warns the user that all character data will be shared with the third-party service before proceeding.
 
 ---
 

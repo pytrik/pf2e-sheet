@@ -36,6 +36,7 @@ Key stats (AC, saves, skills, class DC, spell DC, attack bonuses, HP) are auto-c
 - Three render modes: **Standard** (spacious two-page A4), **Dense** (compact two-column), and **Mobile** (compact single-column, auto-activates on narrow screens)
 - localStorage auto-save with JSON export/import
 - Share characters via URL — compresses character data into the link, no server needed
+- Short Link option — generates a shorter URL via short.io (with privacy warning)
 - Browser-native printing with print-optimized CSS
 - Clean, minimal sheet design with toolbar icons
 
@@ -58,4 +59,5 @@ npm run build    # production build → dist/index.html
 3. Preview the rendered sheet on the right in real time
 4. Use **Export** to save character data as JSON, **Import** to load it back
 5. Click **Share** to copy a URL containing your character — anyone who opens it loads the sheet instantly
+   - **Short Link** generates a shorter URL via an external service (requires public hosting; warns about data sharing)
 6. Print via Ctrl+P — the preview is styled for clean A4 output
