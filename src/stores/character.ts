@@ -72,7 +72,7 @@ export function createDefaultCharacter(): CharacterData {
 
 export const character = writable<CharacterData>(createDefaultCharacter());
 
-export type RenderMode = 'standard' | 'dense';
+export type RenderMode = 'standard' | 'dense' | 'mobile';
 export const renderMode = writable<RenderMode>('standard');
 
 export const computedAC = derived(character, ($c) =>

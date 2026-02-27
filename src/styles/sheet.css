@@ -343,12 +343,10 @@
 }
 
 /* ============================================================
-   Dense Mode
+   Compact Mode (shared by Dense & Mobile)
    ============================================================ */
 
-.dense {
-  columns: 2;
-  column-gap: 5mm;
+.dense, .mobile {
   background: #fff;
   padding: 6mm;
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -358,7 +356,18 @@
   box-sizing: border-box;
 }
 
-.dense .sheet-page {
+.dense {
+  columns: 2;
+  column-gap: 5mm;
+}
+
+.mobile {
+  font-size: 19px;
+  line-height: 1.45;
+  padding: 3mm;
+}
+
+.dense .sheet-page, .mobile .sheet-page {
   padding: 0;
   font-size: inherit;
   min-height: auto;
@@ -367,112 +376,112 @@
   background: none;
 }
 
-.dense .sheet-page h1 {
+.dense .sheet-page h1, .mobile .sheet-page h1 {
   font-size: 1.2rem;
   margin: 0 0 1mm;
 }
 
-.dense .sheet-page h2 {
+.dense .sheet-page h2, .mobile .sheet-page h2 {
   font-size: 0.8rem;
   margin: 2mm 0 1mm;
   padding-bottom: 0.5mm;
   break-after: avoid;
 }
 
-.dense .sheet-page h3 {
+.dense .sheet-page h3, .mobile .sheet-page h3 {
   font-size: 0.72rem;
   margin: 1mm 0 0.5mm;
 }
 
-.dense .sheet-header {
+.dense .sheet-header, .mobile .sheet-header {
   margin-bottom: 1mm;
   gap: 2mm;
 }
 
-.dense .sheet-header .identity-detail {
+.dense .sheet-header .identity-detail, .mobile .sheet-header .identity-detail {
   font-size: 0.78rem;
 }
 
-/* Dense: Ability modifiers */
-.dense .ability-row {
+/* Compact: Ability modifiers */
+.dense .ability-row, .mobile .ability-row {
   margin-bottom: 1mm;
   gap: 1mm;
 }
 
-.dense .ability-box .ability-label {
+.dense .ability-box .ability-label, .mobile .ability-box .ability-label {
   font-size: 0.6rem;
 }
 
-.dense .ability-box .ability-value {
+.dense .ability-box .ability-value, .mobile .ability-box .ability-value {
   font-size: 0.95rem;
 }
 
-/* Dense: Stat blocks */
-.dense .stat-block {
+/* Compact: Stat blocks */
+.dense .stat-block, .mobile .stat-block {
   gap: 0.5mm 3mm;
   margin-bottom: 1mm;
 }
 
-.dense .stat-label {
+.dense .stat-label, .mobile .stat-label {
   font-size: 0.7rem;
 }
 
-.dense .stat-value {
+.dense .stat-value, .mobile .stat-value {
   font-size: 0.8rem;
 }
 
-/* Dense: Skills */
-.dense .skills-grid {
+/* Compact: Skills */
+.dense .skills-grid, .mobile .skills-grid {
   gap: 0.3mm 4mm;
 }
 
-.dense .skill-row {
+.dense .skill-row, .mobile .skill-row {
   padding: 0.1mm 0;
 }
 
-.dense .skill-row .skill-name {
+.dense .skill-row .skill-name, .mobile .skill-row .skill-name {
   font-size: 0.7rem;
 }
 
-.dense .skill-row .skill-value {
+.dense .skill-row .skill-value, .mobile .skill-row .skill-value {
   font-size: 0.72rem;
 }
 
-/* Dense: Attacks table */
-.dense .attacks-table {
+/* Compact: Attacks table */
+.dense .attacks-table, .mobile .attacks-table {
   font-size: 0.7rem;
   margin-bottom: 1mm;
 }
 
-.dense .attacks-table th {
+.dense .attacks-table th, .mobile .attacks-table th {
   font-size: 0.62rem;
   padding: 0.5mm 1mm;
 }
 
-.dense .attacks-table td {
+.dense .attacks-table td, .mobile .attacks-table td {
   padding: 0.5mm 1mm;
 }
 
-/* Dense: Abilities list */
-.dense .abilities-list {
+/* Compact: Abilities list */
+.dense .abilities-list, .mobile .abilities-list {
   margin-bottom: 1mm;
 }
 
-.dense .ability-entry {
+.dense .ability-entry, .mobile .ability-entry {
   margin-bottom: 1mm;
   padding-bottom: 0.8mm;
   break-inside: avoid;
 }
 
-.dense .ability-entry-name {
+.dense .ability-entry-name, .mobile .ability-entry-name {
   font-size: 0.74rem;
 }
 
-.dense .ability-entry-actions {
+.dense .ability-entry-actions, .mobile .ability-entry-actions {
   font-size: 0.68rem;
 }
 
-.dense .ability-entry-description {
+.dense .ability-entry-description, .mobile .ability-entry-description {
   font-size: 0.68rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -480,30 +489,30 @@
   overflow: hidden;
 }
 
-/* Dense: Spells */
-.dense .spells-section {
+/* Compact: Spells */
+.dense .spells-section, .mobile .spells-section {
   margin-bottom: 1mm;
 }
 
-.dense .spell-level-block {
+.dense .spell-level-block, .mobile .spell-level-block {
   margin-bottom: 1mm;
   break-inside: avoid;
 }
 
-.dense .spell-entry {
+.dense .spell-entry, .mobile .spell-entry {
   padding-left: 2mm;
   margin-bottom: 0.5mm;
 }
 
-.dense .spell-entry-name {
+.dense .spell-entry-name, .mobile .spell-entry-name {
   font-size: 0.7rem;
 }
 
-.dense .spell-entry-actions {
+.dense .spell-entry-actions, .mobile .spell-entry-actions {
   font-size: 0.65rem;
 }
 
-.dense .spell-entry-description {
+.dense .spell-entry-description, .mobile .spell-entry-description {
   font-size: 0.65rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -511,35 +520,141 @@
   overflow: hidden;
 }
 
-/* Dense: Items table */
-.dense .items-table {
+/* Compact: Items table */
+.dense .items-table, .mobile .items-table {
   font-size: 0.7rem;
   margin-bottom: 1mm;
 }
 
-.dense .items-table th {
+.dense .items-table th, .mobile .items-table th {
   font-size: 0.62rem;
   padding: 0.5mm 1mm;
 }
 
-.dense .items-table td {
+.dense .items-table td, .mobile .items-table td {
   padding: 0.5mm 1mm;
 }
 
-.dense .items-table .item-description {
+.dense .items-table .item-description, .mobile .items-table .item-description {
   font-size: 0.65rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* Dense: Badges */
-.dense .badge {
+/* Compact: Badges */
+.dense .badge, .mobile .badge {
   font-size: 0.55rem;
   padding: 0.1mm 1mm;
 }
 
-/* Dense: Languages */
-.dense .languages-list {
+/* Compact: Languages */
+.dense .languages-list, .mobile .languages-list {
   font-size: 0.7rem;
+}
+
+/* ============================================================
+   Mobile Mode Overrides
+   ============================================================ */
+
+.mobile .sheet-page h1 {
+  font-size: 1.4em;
+}
+
+.mobile .sheet-page h2 {
+  font-size: 1em;
+  margin: 3mm 0 1.5mm;
+}
+
+.mobile .sheet-page h3 {
+  font-size: 0.9em;
+}
+
+.mobile .sheet-header .identity-detail {
+  font-size: 0.95em;
+}
+
+.mobile .ability-box .ability-label {
+  font-size: 0.75em;
+}
+
+.mobile .ability-box .ability-value {
+  font-size: 1.1em;
+}
+
+.mobile .stat-label {
+  font-size: 0.85em;
+}
+
+.mobile .stat-value {
+  font-size: 0.95em;
+}
+
+.mobile .skill-row .skill-name {
+  font-size: 0.85em;
+}
+
+.mobile .skill-row .skill-value {
+  font-size: 0.88em;
+}
+
+.mobile .attacks-table {
+  font-size: 0.85em;
+}
+
+.mobile .attacks-table th {
+  font-size: 0.78em;
+}
+
+.mobile .ability-entry-name {
+  font-size: 0.9em;
+}
+
+.mobile .ability-entry-actions {
+  font-size: 0.82em;
+}
+
+.mobile .ability-entry-description {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+  font-size: 0.82em;
+}
+
+.mobile .spell-entry-name {
+  font-size: 0.85em;
+}
+
+.mobile .spell-entry-actions {
+  font-size: 0.78em;
+}
+
+.mobile .spell-entry-description {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+  font-size: 0.78em;
+}
+
+.mobile .items-table {
+  font-size: 0.85em;
+}
+
+.mobile .items-table th {
+  font-size: 0.78em;
+}
+
+.mobile .items-table .item-description {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  font-size: 0.78em;
+}
+
+.mobile .badge {
+  font-size: 0.7em;
+}
+
+.mobile .languages-list {
+  font-size: 0.85em;
 }

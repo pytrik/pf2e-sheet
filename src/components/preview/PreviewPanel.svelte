@@ -14,12 +14,15 @@
   $: scale = Math.min(1, (containerWidth - PADDING * 2) / A4_WIDTH_PX);
 </script>
 
-<div class="preview-panel" data-preview-panel bind:clientWidth={containerWidth}>
+<div class="preview-panel" class:mobile-panel={$renderMode === 'mobile'} data-preview-panel bind:clientWidth={containerWidth}>
   <div
     class="sheet-scale-wrapper"
     class:dense={$renderMode === 'dense'}
+    class:mobile={$renderMode === 'mobile'}
     data-scale-wrapper
-    style="transform: scale({scale}); transform-origin: top left; width: {A4_WIDTH_PX}px;"
+    style={$renderMode === 'mobile'
+      ? 'width: 100%;'
+      : `transform: scale(${scale}); transform-origin: top left; width: ${A4_WIDTH_PX}px;`}
   >
     <SheetPage1 />
     <SheetPage2 />
@@ -34,5 +37,10 @@
     background: #e8e8e8;
     padding: 24px;
     min-width: 0;
+  }
+
+  .preview-panel.mobile-panel {
+    background: #fff;
+    padding: 0;
   }
 </style>

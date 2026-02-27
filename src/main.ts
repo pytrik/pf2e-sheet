@@ -5,8 +5,10 @@ import type { RenderMode } from './stores/character';
 
 const params = new URLSearchParams(window.location.search);
 const modeParam = params.get('mode');
-if (modeParam === 'dense') {
+if (modeParam === 'dense' || modeParam === 'mobile') {
   renderMode.set(modeParam as RenderMode);
+} else if (window.innerWidth <= 1024) {
+  renderMode.set('mobile');
 }
 
 renderMode.subscribe((mode) => {

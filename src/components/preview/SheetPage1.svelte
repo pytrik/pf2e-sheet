@@ -143,7 +143,7 @@
   {/if}
 
   <!-- Notes (standard mode only) -->
-  {#if $renderMode !== 'dense'}
+  {#if $renderMode === 'standard'}
     <h2>Notes</h2>
     <p class="notes-line">Current HP: {$computedHP}</p>
   {/if}
