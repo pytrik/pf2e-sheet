@@ -113,9 +113,8 @@
 
 /* --- Skills grid (2-column) --- */
 .skills-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.8mm 6mm;
+  columns: 2;
+  column-gap: 6mm;
 }
 
 .skill-row {
@@ -124,6 +123,7 @@
   align-items: baseline;
   padding: 0.3mm 0;
   border-bottom: 0.5px dotted #ccc;
+  break-inside: avoid;
 }
 
 .skill-row .skill-name {
@@ -432,7 +432,7 @@
 
 /* Compact: Skills */
 .dense .skills-grid, .mobile .skills-grid {
-  gap: 0.3mm 4mm;
+  column-gap: 4mm;
 }
 
 .dense .skill-row, .mobile .skill-row {
