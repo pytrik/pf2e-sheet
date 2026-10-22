@@ -4,10 +4,12 @@
 </script>
 
 <section class="collapsible">
-  <button type="button" class="section-header" on:click={() => (open = !open)}>
-    <span class="chevron" class:open>{@html '&#9654;'}</span>
-    <h3>{title}</h3>
-  </button>
+  <h3>
+    <button type="button" class="section-header" aria-expanded={open} on:click={() => (open = !open)}>
+      <span class="chevron" class:open aria-hidden="true">▶</span>
+      {title}
+    </button>
+  </h3>
   {#if open}
     <div class="section-content">
       <slot />
@@ -34,6 +36,7 @@
     border: none;
     border-radius: var(--radius);
     text-align: left;
+    font-weight: inherit;
     cursor: pointer;
   }
 

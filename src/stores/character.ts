@@ -21,9 +21,12 @@ function createDefaultSpellLevels(): Record<number, SpellLevelData> {
   return levels;
 }
 
+/** Current save format version. Bump and handle in sanitizeCharacter on breaking changes. */
+export const CHARACTER_VERSION = 2;
+
 export function createDefaultCharacter(): CharacterData {
   return {
-    version: 1,
+    version: CHARACTER_VERSION,
     name: '',
     heritage: '',
     class: '',

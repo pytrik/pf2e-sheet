@@ -4,16 +4,10 @@
   import ProficiencySelector from './shared/ProficiencySelector.svelte';
   import NumberInput from './shared/NumberInput.svelte';
 
-  let hasDexCap = $character.armorClass.dexCap !== null;
+  $: hasDexCap = $character.armorClass.dexCap !== null;
 
   function toggleDexCap() {
-    hasDexCap = !hasDexCap;
-    if (hasDexCap) {
-      $character.armorClass.dexCap = 0;
-    } else {
-      $character.armorClass.dexCap = null;
-    }
-    $character = $character;
+    $character.armorClass.dexCap = hasDexCap ? null : 0;
   }
 
   function updateDexCap(e: Event) {
@@ -28,7 +22,7 @@
   <div class="subsection">
     <h4>Armor Class</h4>
     <div class="row">
-      <ProficiencySelector bind:value={$character.armorClass.proficiency} />
+      <ProficiencySelector bind:value={$character.armorClass.proficiency} ariaLabel="AC proficiency" />
       <div class="field">
         <label>
           <input type="checkbox" checked={hasDexCap} on:change={toggleDexCap} />
@@ -39,6 +33,7 @@
             type="number"
             value={$character.armorClass.dexCap}
             on:input={updateDexCap}
+            aria-label="Dex cap"
             min={0}
             style="width: 60px"
           />
@@ -55,19 +50,19 @@
     <h4>Saving Throws</h4>
     <div class="save-row">
       <span class="save-label">Fortitude</span>
-      <ProficiencySelector bind:value={$character.savingThrows.fortitude.proficiency} />
+      <ProficiencySelector bind:value={$character.savingThrows.fortitude.proficiency} ariaLabel="Fortitude proficiency" />
       <NumberInput label="Misc" bind:value={$character.savingThrows.fortitude.miscBonus} />
       <div class="computed-value">{signedNumber($computedFortitude)}</div>
     </div>
     <div class="save-row">
       <span class="save-label">Reflex</span>
-      <ProficiencySelector bind:value={$character.savingThrows.reflex.proficiency} />
+      <ProficiencySelector bind:value={$character.savingThrows.reflex.proficiency} ariaLabel="Reflex proficiency" />
       <NumberInput label="Misc" bind:value={$character.savingThrows.reflex.miscBonus} />
       <div class="computed-value">{signedNumber($computedReflex)}</div>
     </div>
     <div class="save-row">
       <span class="save-label">Will</span>
-      <ProficiencySelector bind:value={$character.savingThrows.will.proficiency} />
+      <ProficiencySelector bind:value={$character.savingThrows.will.proficiency} ariaLabel="Will proficiency" />
       <NumberInput label="Misc" bind:value={$character.savingThrows.will.miscBonus} />
       <div class="computed-value">{signedNumber($computedWill)}</div>
     </div>

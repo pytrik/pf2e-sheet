@@ -2,6 +2,8 @@
   import { ProficiencyRank, PROFICIENCY_LABELS } from '../../../types/constants';
 
   export let value: ProficiencyRank = ProficiencyRank.Untrained;
+  /** Accessible name for the group, e.g. "Fortitude proficiency". */
+  export let ariaLabel: string = 'Proficiency';
 
   const ranks = [
     ProficiencyRank.Untrained,
@@ -10,9 +12,32 @@
     ProficiencyRank.Master,
     ProficiencyRank.Legendary,
   ];
+
+  const names: Record<ProficiencyRank, string> = {
+    [ProficiencyRank.Untrained]: 'Untrained',
+    [ProficiencyRank.Trained]: 'Trained',
+    [ProficiencyRank.Expert]: 'Expert',
+    [ProficiencyRank.Master]: 'Master',
+    [ProficiencyRank.Legendary]: 'Legendary',
+  };
+
+  let group: HTMLDivElement;
+
+  // Radio group keyboard pattern: arrows move the selection, one tab stop.
+  function handleKeydown(e: KeyboardEvent) {
+    const step = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1
+      : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
+    if (!step) return;
+    e.preventDefault();
+    const idx = Math.max(0, ranks.indexOf(value));
+    value = ranks[(idx + step + ranks.length) % ranks.length];
+    group.querySelectorAll<HTMLButtonElement>('button')[ranks.indexOf(value)]?.focus();
+  }
 </script>
 
-<div class="prof-selector" role="radiogroup">
+<!-- Focus lives on the radio buttons (roving tabindex), not the group itself. -->
+<!-- svelte-ignore a11y_interactive_supports_focus -->
+<div class="prof-selector" role="radiogroup" aria-label={ariaLabel} bind:this={group} on:keydown={handleKeydown}>
   {#each ranks as rank}
     <button
       type="button"
@@ -20,7 +45,9 @@
       class:active={value === rank}
       role="radio"
       aria-checked={value === rank}
-      aria-label={PROFICIENCY_LABELS[rank]}
+      aria-label={names[rank]}
+      title={names[rank]}
+      tabindex={value === rank ? 0 : -1}
       on:click={() => (value = rank)}
     >
       {PROFICIENCY_LABELS[rank]}

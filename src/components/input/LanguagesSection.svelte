@@ -18,8 +18,9 @@
           type="text"
           bind:value={$character.languages[i]}
           placeholder="Language"
+          aria-label="Language"
         />
-        <button class="remove-btn" type="button" on:click={() => removeLanguage(i)}>
+        <button class="remove-btn" type="button" aria-label={`Remove ${$character.languages[i] || 'language'}`} on:click={() => removeLanguage(i)}>
           &times;
         </button>
       </div>

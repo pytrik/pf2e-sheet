@@ -12,6 +12,7 @@ Several external paste/storage services were evaluated for sharing character JSO
 | **JSONBin.io** | Requires auth header; free tier limits |
 | **Firebase / Supabase** | Requires project setup, credentials, ongoing maintenance |
 | **Hastebin** | Self-hosted instances unreliable; no guaranteed public CORS endpoint |
+| **short.io** (shortener) | Shipped as an optional "Short Link" in v1.6.x, removed in v1.7.0: the public API key has to live in the client, so anyone could create redirects on the app's short domain |
 
 **Common problems:** CORS restrictions, authentication requirements, rate limits, service reliability, and added external dependency for a static site.
 

@@ -13,7 +13,7 @@ Two-panel side-by-side layout:
 Both panels share a polished, cohesive visual style.
 
 ### 1.3 No Backend
-The app is entirely client-side. No server, no API calls, no external resources at runtime (except the optional Short Link feature, which calls the short.io API).
+The app is entirely client-side. No server, no API calls, no external resources at runtime.
 
 ---
 
@@ -117,11 +117,13 @@ Auto-calculated:
 - **Formula**: `proficiencyBonus + WIS + miscBonus`
 
 ### 2.11 Speed
-Manual number field (in feet). Optional misc field for modifiers.
+Manual number field (in feet).
 
 ---
 
-## 3. Page 2 — Attacks, Abilities, Spells
+## 3. Attacks, Abilities, Spells, Items
+
+Attacks render on page 1; abilities, spells and items on page 2.
 
 ### 3.1 Attacks / Strikes
 Each attack entry has:
@@ -143,11 +145,11 @@ A flat, ordered list of ability entries. Each entry has:
 |------------|------------------|----------|--------------------------------------------------|
 | Name       | string           | yes      | Ability/feat name                                |
 | Actions    | string           | no       | Free text (e.g., "1", "2", "3", "free", "reaction", etc.) |
-| Type       | tag/enum         | yes      | One of: Class Feature, Ancestry Feat, Class Feat, Skill Feat, General Feat, Bonus Feat, Other |
+| Type       | tag/enum         | yes      | One of: Class, Ancestry, Feat, Skill, General, Other |
 | Level      | number or null   | no       | Level at which the ability was gained            |
-| Description| string (rich)    | yes      | Free text description, supports basic formatting |
+| Description| string           | yes      | Plain-text description                           |
 
-Abilities are displayed as a flat list, sorted by level (nulls last), with type shown as a small tag/badge.
+Abilities are displayed as a flat list with type shown as a small tag/badge, sorted by: entries with an action cost first, then action cost (1, 2, 3, free, reaction), then level (nulls last), then name.
 
 ### 3.3 Spells
 Spell configuration:
@@ -189,15 +191,20 @@ Each item has:
 ### 4.1 Auto-save
 - Character data is automatically saved to `localStorage` on every change (debounced)
 - On app load, the last saved character is restored automatically
+- Pending changes are flushed on `pagehide` so edits made just before closing the tab are not lost
 
 ### 4.2 JSON Export/Import
 - **Export**: download the full character data as a `.json` file
 - **Import**: upload a `.json` file to load a character (replaces current data)
-- The JSON format should be documented and versioned (include a `version` field) for future compatibility
+- The JSON format is versioned (`version` field, currently 2; v1 had no items list)
+
+### 4.4 Validation
+Data from localStorage, imported files and share links is untrusted. It is rebuilt field by field on top of the defaults (`sanitizeCharacter`): wrong types fall back to defaults, numbers are coerced and clamped (level 1–20), enums (ability, proficiency rank, ability type) are checked, and unknown versions are rejected.
 
 ### 4.3 Sharing
 - **Share**: compresses the full character data into the URL hash (`#char=...`) and copies it to the clipboard. No external services involved.
-- **Short Link**: sends the full share URL to short.io to generate a shorter link. Only available when the app is hosted on a public URL (not on `file:`, `localhost`, or private IP ranges). A confirmation dialog warns the user that all character data will be shared with the third-party service before proceeding.
+- Only available when the app is hosted on a public URL (not on `file:`, `localhost`, or private/link-local IP ranges), since the link would not be reachable by others.
+- **Opening a share link**: the hash is cleared immediately. If a different, non-empty character is already saved in the browser, a confirmation dialog asks before replacing it. A link that cannot be decoded shows an error.
 
 ---
 
@@ -222,9 +229,10 @@ A toolbar button cycles between three render modes:
 - Print CSS hides the input panel and all app chrome
 - **Standard mode**: clean two-page A4 document
 - **Dense mode**: compact two-column layout with natural page flow
+- **Mobile mode**: single-column layout with type scaled back down to paper size
 - No headers/footers from the browser (instruct user to disable these if needed)
 
-### 5.3 Sheet Style
+### 5.4 Sheet Style
 - Clean, minimal design
 - Clear typography with good hierarchy
 - Subtle borders and section dividers
@@ -240,7 +248,7 @@ A toolbar button cycles between three render modes:
 - Sections for each data group (Identity, Abilities, Defenses, Skills, etc.)
 - Collapsible sections to manage complexity
 - Clear labels and helpful placeholder text
-- Proficiency selectors should be compact (e.g., radio buttons or segmented controls labeled U/T/E/M/L)
+- Proficiency selectors are compact segmented controls labeled U/T/E/M/L (ARIA radio group with full rank names and arrow-key navigation)
 - Dynamic lists (Lore skills, abilities, attacks, spells) support add/remove
 
 ### 6.2 Responsiveness

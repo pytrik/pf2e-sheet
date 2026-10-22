@@ -15,5 +15,5 @@
     "types": ["svelte"]
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "dev-out"]
+  "exclude": ["node_modules", "dist", "public"]
 }

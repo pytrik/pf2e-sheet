@@ -6,7 +6,7 @@
 </script>
 
 <div class="perception-row">
-  <ProficiencySelector bind:value={$character.perception.proficiency} />
+  <ProficiencySelector bind:value={$character.perception.proficiency} ariaLabel="Perception proficiency" />
   <NumberInput label="Misc" bind:value={$character.perception.miscBonus} />
   <div class="computed-value">{signedNumber($computedPerception)}</div>
 </div>

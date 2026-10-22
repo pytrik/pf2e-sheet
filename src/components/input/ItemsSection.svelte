@@ -39,7 +39,7 @@
       <div class="item-row">
         <div class="field grow">
           {#if i === 0}<span class="column-header">Name</span>{/if}
-          <input type="text" bind:value={item.name} placeholder="Item name" />
+          <input type="text" bind:value={item.name} placeholder="Item name" aria-label="Name" />
         </div>
         <div class="field">
           {#if i === 0}<span class="column-header">Weight</span>{/if}
@@ -47,6 +47,7 @@
             type="number"
             value={item.weight ?? ''}
             on:input={(e) => handleNumberInput(item, 'weight', e)}
+            aria-label="Weight"
             placeholder="--"
             min={0}
             step="any"
@@ -59,6 +60,7 @@
             type="number"
             value={item.value ?? ''}
             on:input={(e) => handleNumberInput(item, 'value', e)}
+            aria-label="Value"
             placeholder="--"
             min={0}
             step="any"
@@ -71,6 +73,7 @@
             type="number"
             value={item.amount ?? ''}
             on:input={(e) => handleNumberInput(item, 'amount', e)}
+            aria-label="Amount"
             placeholder="--"
             min={0}
             class="num-input"
@@ -82,6 +85,7 @@
             type="number"
             value={item.uses ?? ''}
             on:input={(e) => handleNumberInput(item, 'uses', e)}
+            aria-label="Uses"
             placeholder="--"
             min={0}
             class="num-input"
@@ -89,7 +93,7 @@
         </div>
         <div class="field">
           {#if i === 0}<span class="column-header">&nbsp;</span>{/if}
-          <button type="button" class="remove-btn" on:click={() => removeItem(item.id)}>
+          <button type="button" class="remove-btn" aria-label={`Remove ${item.name || 'item'}`} on:click={() => removeItem(item.id)}>
             &times;
           </button>
         </div>
@@ -98,6 +102,7 @@
         <textarea
           bind:value={item.description}
           placeholder="Description..."
+          aria-label="Description"
           rows="2"
         ></textarea>
       </div>

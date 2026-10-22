@@ -43,7 +43,7 @@
       <div class="ability-row">
         <div class="field grow">
           {#if i === 0}<span class="column-header">Name</span>{/if}
-          <input type="text" bind:value={entry.name} placeholder="Ability / Feat name" />
+          <input type="text" bind:value={entry.name} placeholder="Ability / Feat name" aria-label="Name" />
         </div>
         <div class="field">
           {#if i === 0}<span class="column-header">Act</span>{/if}
@@ -51,7 +51,7 @@
         </div>
         <div class="field">
           {#if i === 0}<span class="column-header">Type</span>{/if}
-          <select bind:value={entry.type}>
+          <select bind:value={entry.type} aria-label="Type">
             {#each abilityTypes as t}
               <option value={t}>{t}</option>
             {/each}
@@ -67,11 +67,12 @@
             min={1}
             max={20}
             class="level-input"
+            aria-label="Level"
           />
         </div>
         <div class="field">
           {#if i === 0}<span class="column-header">&nbsp;</span>{/if}
-          <button type="button" class="remove-btn" on:click={() => removeAbility(entry.id)}>
+          <button type="button" class="remove-btn" aria-label={`Remove ${entry.name || 'ability'}`} on:click={() => removeAbility(entry.id)}>
             &times;
           </button>
         </div>
@@ -80,6 +81,7 @@
         <textarea
           bind:value={entry.description}
           placeholder="Description..."
+          aria-label="Description"
           rows="2"
         ></textarea>
       </div>

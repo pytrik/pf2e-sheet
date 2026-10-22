@@ -4,6 +4,8 @@
 
   export let value: Ability = Ability.STR;
   export let label: string = '';
+  /** Accessible name when there is no visible label. */
+  export let ariaLabel: string = '';
 
   const abilities = Object.values(Ability);
   const selectId = label ? `ability-${generateId()}` : '';
@@ -13,7 +15,7 @@
   {#if label}
     <label for={selectId}>{label}</label>
   {/if}
-  <select id={selectId || undefined} bind:value>
+  <select id={selectId || undefined} aria-label={!label && ariaLabel ? ariaLabel : undefined} bind:value>
     {#each abilities as ab}
       <option value={ab}>{ab}</option>
     {/each}

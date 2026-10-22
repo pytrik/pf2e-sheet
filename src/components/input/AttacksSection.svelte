@@ -36,7 +36,7 @@
       <div class="attack-row">
         <div class="field grow">
           {#if i === 0}<span class="column-header">Name</span>{/if}
-          <input type="text" bind:value={attack.name} placeholder="Attack name" />
+          <input type="text" bind:value={attack.name} placeholder="Attack name" aria-label="Name" />
         </div>
         <div class="field">
           {#if i === 0}<span class="column-header">Act</span>{/if}
@@ -44,7 +44,7 @@
         </div>
         <div class="field">
           {#if i === 0}<span class="column-header">Ability</span>{/if}
-          <AbilitySelect bind:value={attack.ability} />
+          <AbilitySelect bind:value={attack.ability} ariaLabel="Ability" />
         </div>
         <div class="field">
           {#if i === 0}<span class="column-header">Prof</span>{/if}
@@ -52,11 +52,11 @@
         </div>
         <div class="field">
           {#if i === 0}<span class="column-header">Item</span>{/if}
-          <NumberInput bind:value={attack.itemBonus} width="50px" min={0} />
+          <NumberInput bind:value={attack.itemBonus} width="50px" min={0} ariaLabel="Item bonus" />
         </div>
         <div class="field">
           {#if i === 0}<span class="column-header">Misc</span>{/if}
-          <NumberInput bind:value={attack.miscBonus} width="50px" />
+          <NumberInput bind:value={attack.miscBonus} width="50px" ariaLabel="Misc bonus" />
         </div>
         <div class="field">
           {#if i === 0}<span class="column-header">Total</span>{/if}
@@ -69,15 +69,16 @@
             bind:value={attack.damage}
             placeholder="1d8+4"
             class="damage-input"
+            aria-label="Damage"
           />
         </div>
         <div class="field grow">
           {#if i === 0}<span class="column-header">Traits</span>{/if}
-          <input type="text" bind:value={attack.traits} placeholder="Traits" />
+          <input type="text" bind:value={attack.traits} placeholder="Traits" aria-label="Traits" />
         </div>
         <div class="field">
           {#if i === 0}<span class="column-header">&nbsp;</span>{/if}
-          <button type="button" class="remove-btn" on:click={() => removeAttack(attack.id)}>
+          <button type="button" class="remove-btn" aria-label={`Remove ${attack.name || 'attack'}`} on:click={() => removeAttack(attack.id)}>
             &times;
           </button>
         </div>

@@ -6,7 +6,7 @@
 </script>
 
 <div class="classdc-row">
-  <ProficiencySelector bind:value={$character.classDC.proficiency} />
+  <ProficiencySelector bind:value={$character.classDC.proficiency} ariaLabel="Class DC proficiency" />
   <AbilitySelect label="Key Ability" bind:value={$character.classDC.keyAbility} />
   <NumberInput label="Misc" bind:value={$character.classDC.miscBonus} />
   <div class="computed-value">{$computedClassDC}</div>

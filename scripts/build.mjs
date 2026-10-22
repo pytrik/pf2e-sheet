@@ -8,7 +8,9 @@ const debug = process.argv.includes('--debug');
 await esbuild.build({
   entryPoints: ['src/main.ts'],
   bundle: true,
-  outfile: 'dist/bundle.js',
+  // Intermediates go to .build/ so dist/ holds only the final index.html
+  // (that whole folder is what gets published).
+  outfile: '.build/bundle.js',
   format: 'iife',
   // Granular minification — minifyWhitespace is disabled because it converts
   // string literals like "\n   text" into template literals with real newline
@@ -28,12 +30,12 @@ await esbuild.build({
 });
 
 const template = readFileSync('src/template.html', 'utf-8');
-const bundle = readFileSync('dist/bundle.js', 'utf-8');
+const bundle = readFileSync('.build/bundle.js', 'utf-8');
 
-// Inline CSS if it was extracted
+// Inline extracted CSS (plain .css imports) if esbuild produced a file.
 let css = '';
-if (existsSync('dist/bundle.css')) {
-  css = readFileSync('dist/bundle.css', 'utf-8');
+if (existsSync('.build/bundle.css')) {
+  css = readFileSync('.build/bundle.css', 'utf-8');
 }
 
 let html = template.replace('<!-- SCRIPT -->', bundle);

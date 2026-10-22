@@ -1,5 +1,11 @@
 name: Deploy and Release
 
+# Tag a commit `vX.Y.Z` and push the tag to trigger this:
+#   git tag v0.1.0 && git push origin v0.1.0
+# It builds dist/index.html, publishes it to GitHub Pages, and attaches a
+# zipped release to a GitHub Release. Enable Pages (Settings > Pages > Source:
+# GitHub Actions) once per repo.
+
 on:
   push:
     tags:
@@ -18,18 +24,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: '22'
+          node-version: '24'
           cache: 'npm'
 
       - run: npm ci
 
       - run: npm run build
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: build-output
           path: dist
@@ -41,29 +47,29 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: build-output
           path: dist
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
   release:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           sparse-checkout: |
             LICENSE
             README.md
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: build-output
           path: dist
@@ -75,7 +81,7 @@ jobs:
           cd release
           zip ../pf2e-sheet-${{ github.ref_name }}.zip *
 
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           generate_release_notes: true
           files: pf2e-sheet-${{ github.ref_name }}.zip

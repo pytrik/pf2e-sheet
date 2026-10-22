@@ -36,14 +36,14 @@
 
   $: sortedAbilities = sortAbilities($character.abilities_list);
 
-  $: hasSpellcasting = $character.spellcasting.tradition !== '';
-
   $: spellLevelsWithSpells = (SPELL_LEVELS as readonly SpellLevel[]).filter(
     (lvl) => {
       const data = $character.spellcasting.spellLevels[lvl];
       return data && data.spells.length > 0;
     },
   );
+
+  $: hasSpellcasting = $character.spellcasting.tradition !== '' || spellLevelsWithSpells.length > 0;
 </script>
 
 <div class="sheet-page">

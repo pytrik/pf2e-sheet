@@ -46,7 +46,7 @@
       <AbilitySelect label="Ability" bind:value={$character.spellcasting.ability} />
       <div class="field">
         <span class="column-header">Proficiency</span>
-        <ProficiencySelector bind:value={$character.spellcasting.proficiency} />
+        <ProficiencySelector bind:value={$character.spellcasting.proficiency} ariaLabel="Spellcasting proficiency" />
       </div>
       <NumberInput label="Misc" bind:value={$character.spellcasting.miscBonus} width="50px" />
       <div class="field">
@@ -82,7 +82,7 @@
                 <div class="spell-row">
                   <div class="field grow">
                     {#if i === 0}<span class="column-header">Name</span>{/if}
-                    <input type="text" bind:value={spell.name} placeholder="Spell name" />
+                    <input type="text" bind:value={spell.name} placeholder="Spell name" aria-label="Spell name" />
                   </div>
                   <div class="field">
                     {#if i === 0}<span class="column-header">Act</span>{/if}
@@ -92,7 +92,7 @@
                     {#if i === 0}<span class="column-header">&nbsp;</span>{/if}
                     <button
                       type="button"
-                      class="remove-btn"
+                      class="remove-btn" aria-label={`Remove ${spell.name || 'spell'}`}
                       on:click={() => removeSpell(level, spell.id)}
                     >
                       &times;
@@ -103,6 +103,7 @@
                   <textarea
                     bind:value={spell.description}
                     placeholder="Description..."
+                    aria-label="Description"
                     rows="2"
                   ></textarea>
                 </div>

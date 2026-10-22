@@ -35,6 +35,11 @@
     border: none !important;
   }
 
+  /* No trailing blank page after the last sheet */
+  .sheet-page:last-child {
+    page-break-after: auto;
+  }
+
   .sheet-page h2,
   .sheet-page h3 {
     page-break-after: avoid;
@@ -61,6 +66,13 @@
     width: auto;
     min-height: auto;
     page-break-after: auto;
+  }
+
+  /* Mobile mode is sized for phone screens; scale its em-based type back
+     down to paper size. */
+  .mobile {
+    font-size: 10pt;
+    padding: 6mm;
   }
 
   .dense .ability-entry,

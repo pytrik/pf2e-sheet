@@ -39,9 +39,10 @@
         <span class="skill-name">{skill.name} ({skill.ability})</span>
         <ProficiencySelector
           bind:value={$character.skills[skill.index].proficiency}
+          ariaLabel="{skill.name || 'Skill'} proficiency"
         />
         <NumberInput
-          label=""
+          ariaLabel="{skill.name || 'Skill'} misc bonus"
           bind:value={$character.skills[skill.index].miscBonus}
           width="50px"
         />
@@ -64,23 +65,26 @@
             type="text"
             bind:value={$character.skills[skill.index].name}
             placeholder="Skill name"
+            aria-label="Skill name"
           />
         </div>
         <AbilitySelect
           bind:value={$character.skills[skill.index].ability}
+          ariaLabel="{skill.name || 'Skill'} ability"
         />
         <ProficiencySelector
           bind:value={$character.skills[skill.index].proficiency}
+          ariaLabel="{skill.name || 'Skill'} proficiency"
         />
         <NumberInput
-          label=""
+          ariaLabel="{skill.name || 'Skill'} misc bonus"
           bind:value={$character.skills[skill.index].miscBonus}
           width="50px"
         />
         <span class="computed-value">
           {signedNumber($computedSkills[skill.index]?.total ?? 0)}
         </span>
-        <button class="remove-btn" type="button" on:click={() => removeCustomSkill(skill.index)}>
+        <button class="remove-btn" aria-label={`Remove ${skill.name || 'skill'}`} type="button" on:click={() => removeCustomSkill(skill.index)}>
           &times;
         </button>
       </div>

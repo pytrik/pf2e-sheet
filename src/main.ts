@@ -1,5 +1,6 @@
+import { mount } from 'svelte';
 import App from './components/App.svelte';
-import { loadCharacter, loadCharacterFromHash, initAutoSave } from './stores/persistence';
+import { loadCharacter, initAutoSave } from './stores/persistence';
 import { renderMode } from './stores/character';
 import type { RenderMode } from './stores/character';
 
@@ -21,12 +22,12 @@ renderMode.subscribe((mode) => {
   history.replaceState(null, '', url.toString());
 });
 
+// Shared characters in the URL hash are handled by App, which can ask before
+// replacing the saved one.
 loadCharacter();
-loadCharacterFromHash().then(() => {
-  initAutoSave();
-});
+initAutoSave();
 
-const app = new App({
+const app = mount(App, {
   target: document.getElementById('app')!,
 });
 

@@ -9,6 +9,7 @@ const ctx = await esbuild.context({
   format: 'iife',
   sourcemap: true,
   entryNames: 'bundle',
+  // Live reload: esbuild's /esbuild SSE stream fires on every rebuild.
   banner: {
     js: `(() => { const es = new EventSource("/esbuild"); es.onmessage = () => location.reload(); })();`,
   },

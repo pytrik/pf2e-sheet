@@ -1,5 +1,6 @@
-export function signedNumber(n: number): string {
-  return n >= 0 ? `+${n}` : `${n}`;
+export function signedNumber(n: number | null | undefined): string {
+  const v = n ?? 0;
+  return v >= 0 ? `+${v}` : `${v}`;
 }
 
 export function formatActions(str: string): string {
@@ -14,6 +15,11 @@ export function formatActions(str: string): string {
   }
 }
 
+let idCounter = 0;
+
 export function generateId(): string {
-  return crypto.randomUUID();
+  // randomUUID only exists in secure contexts (https/localhost); fall back for
+  // plain-http LAN testing.
+  if (typeof crypto.randomUUID === 'function') return crypto.randomUUID();
+  return `id-${Date.now().toString(36)}-${(idCounter++).toString(36)}-${Math.random().toString(36).slice(2)}`;
 }
