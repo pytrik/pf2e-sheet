@@ -18,7 +18,7 @@ Key stats (AC, saves, skills, class DC, spell DC, attack bonuses, HP) are auto-c
 
 ## Tech Stack
 
-- **Svelte** — UI framework
+- **Svelte 5** — UI framework (components still use the Svelte 4 syntax, which Svelte 5 runs in legacy mode)
 - **TypeScript** — type safety
 - **esbuild** — bundling to a single HTML file
 - **No runtime dependencies** — everything compiles down to one self-contained HTML file
@@ -48,7 +48,8 @@ This project is licensed under the [MIT License](LICENSE). You're free to use, c
 
 ```bash
 npm install
-npm run dev      # development server with hot reload
+npm run dev      # development server with live reload
+npm run check    # type check (svelte-check)
 npm run build    # production build → dist/index.html
 ```
 

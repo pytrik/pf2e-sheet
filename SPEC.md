@@ -274,11 +274,12 @@ A toolbar button cycles between three render modes:
 ## 7. Build System
 
 ### 7.1 Development
-- `npm run dev` — starts a development server with hot module reload
-- Uses esbuild for fast compilation
+- `npm run dev` — starts a development server (http://localhost:3000) that reloads the page on every rebuild
+- Uses esbuild for fast compilation; `npm run check` runs `svelte-check` for type checking (esbuild only strips types)
 
 ### 7.2 Production Build
-- `npm run build` — produces a single `dist/index.html`
+- `npm run build` — produces a single `dist/index.html` (intermediates go to `.build/`, so `dist/` holds only that file)
+- Pushing a `vX.Y.Z` tag runs `.github/workflows/deploy.yml`: deploys to GitHub Pages and attaches a zip (index.html, LICENSE, README) to a GitHub Release
 - All JavaScript and CSS must be inlined into the HTML file
 - No external resource references (fonts, images, etc.)
 - The output file should work when opened directly from the filesystem (file:// protocol)
