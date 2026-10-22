@@ -9,7 +9,7 @@
   import LanguagesSection from './LanguagesSection.svelte';
   import AttacksSection from './AttacksSection.svelte';
   import AbilitiesSection from './AbilitiesSection.svelte';
-  import SpellsSection from './SpellsSection.svelte';
+  import CastingSection from './CastingSection.svelte';
   import ItemsSection from './ItemsSection.svelte';
 </script>
 
@@ -50,8 +50,8 @@
     <AbilitiesSection />
   </CollapsibleSection>
 
-  <CollapsibleSection title="Spellcasting">
-    <SpellsSection />
+  <CollapsibleSection title="Spells & Formulas">
+    <CastingSection />
   </CollapsibleSection>
 
   <CollapsibleSection title="Items">

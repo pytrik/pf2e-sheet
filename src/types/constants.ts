@@ -68,7 +68,7 @@ export enum AbilityEntryType {
 export const SPELL_LEVELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const;
 export type SpellLevel = (typeof SPELL_LEVELS)[number];
 
-export const SPELL_LEVEL_LABELS: Record<SpellLevel, string> = {
+export const SPELL_LEVEL_LABELS: Record<number, string> = {
   0: 'Cantrips',
   1: '1st',
   2: '2nd',
@@ -81,3 +81,55 @@ export const SPELL_LEVEL_LABELS: Record<SpellLevel, string> = {
   9: '9th',
   10: '10th',
 };
+
+export type CastingKind = 'spells' | 'formulas';
+
+export interface CastingKindConfig {
+  /** Section title on the sheet and in the add button. */
+  title: string;
+  /** Singular noun for one entry ("spell", "formula"). */
+  entry: string;
+  /** Label and placeholder for the source's name field. */
+  nameLabel: string;
+  namePlaceholder: string;
+  /** Highest level an entry can have (lowest is always 0). */
+  maxLevel: number;
+  levelLabel: (level: number) => string;
+  /** Has its own DC and attack (ability + proficiency + misc). */
+  hasDC: boolean;
+  /** Tracks slots per level (level 0 never has slots). */
+  hasSlots: boolean;
+  /** Tracks a single per-day count, e.g. versatile vials. */
+  hasPerDay: boolean;
+}
+
+/**
+ * Everything that differs between kinds of casting source lives here, so a new
+ * kind (focus spells, innate spells, rituals, ...) is one more entry.
+ */
+export const CASTING_KINDS: Record<CastingKind, CastingKindConfig> = {
+  spells: {
+    title: 'Spells',
+    entry: 'spell',
+    nameLabel: 'Tradition',
+    namePlaceholder: 'Arcane, Divine...',
+    maxLevel: 10,
+    levelLabel: (l) => SPELL_LEVEL_LABELS[l] ?? `Rank ${l}`,
+    hasDC: true,
+    hasSlots: true,
+    hasPerDay: false,
+  },
+  formulas: {
+    title: 'Formulas',
+    entry: 'formula',
+    nameLabel: 'Source',
+    namePlaceholder: 'Alchemist, Munitions Crafter...',
+    maxLevel: 20,
+    levelLabel: (l) => `Level ${l}`,
+    hasDC: false,
+    hasSlots: false,
+    hasPerDay: true,
+  },
+};
+
+export const CASTING_KIND_IDS = Object.keys(CASTING_KINDS) as CastingKind[];

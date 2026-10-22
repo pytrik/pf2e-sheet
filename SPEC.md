@@ -121,9 +121,9 @@ Manual number field (in feet).
 
 ---
 
-## 3. Attacks, Abilities, Spells, Items
+## 3. Attacks, Abilities, Spells & Formulas, Items
 
-Attacks render on page 1; abilities, spells and items on page 2.
+Attacks render on page 1; abilities, spells & formulas and items on page 2.
 
 ### 3.1 Attacks / Strikes
 Each attack entry has:
@@ -151,28 +151,28 @@ A flat, ordered list of ability entries. Each entry has:
 
 Abilities are displayed as a flat list with type shown as a small tag/badge, sorted by: entries with an action cost first, then action cost (1, 2, 3, free, reaction), then level (nulls last), then name.
 
-### 3.3 Spells
-Spell configuration:
-| Field              | Type   | Notes                              |
-|-------------------|--------|------------------------------------|
-| Tradition         | string | Free text (Arcane, Divine, etc.)   |
-| Spellcasting ability | enum | Which ability mod                  |
-| Proficiency       | rank   | Untrained–Legendary                |
-| Misc bonus        | number | Extra bonus to DC and attack       |
-| **Spell DC**      | computed | `10 + proficiencyBonus + abilityMod + miscBonus` |
-| **Spell attack**  | computed | `proficiencyBonus + abilityMod + miscBonus`      |
+### 3.3 Spells & Formulas
+A list of **casting sources**, each of one kind. A character usually has none or one; the rare character with both spells and alchemy (or an archetype second tradition) simply adds another. Everything that differs per kind lives in one config table (`CASTING_KINDS`), so further kinds (focus spells, innate spells, rituals, ...) are a single new entry.
 
-Spell slots per level (cantrips, 1st–10th):
-- Each level has a number of slots (manual entry)
-- Each level has a list of spell entries:
-  | Field       | Type   |
-  |------------|--------|
-  | Name       | string |
-  | Actions    | string | (Free text: 1, 2, 3, free, reaction, etc.) |
+| Kind     | Name field | Levels            | Extra stats                                   |
+|----------|-----------|-------------------|-----------------------------------------------|
+| Spells   | Tradition | Cantrips, 1st–10th rank | Ability, proficiency, misc → **DC** and **attack**; slots per rank (not cantrips) |
+| Formulas | Source (e.g. Alchemist, Munitions Crafter) | Item level 0–20 | Optional per-day count (versatile vials, daily munitions) |
+
+- **Spell DC** = `10 + proficiencyBonus + abilityMod + miscBonus`, **spell attack** = `proficiencyBonus + abilityMod + miscBonus`. Formulas have no DC of their own (alchemical items use the class DC).
+- Each source has a list of entries:
+  | Field       | Type   | Notes |
+  |------------|--------|-------|
+  | Name       | string | |
+  | Level      | number | Spell rank or item level, set when the entry is added |
+  | Actions    | string | 1, 2, 3, free, reaction |
   | Description| string | Brief description or notes |
+- Input: entries are grouped by level; only levels with entries are shown, each with its own add button, plus a level picker to start a new level. Removing a whole source asks for inline confirmation.
+- Sheet: one section per source that has a name or entries, titled "Spells — Primal", "Formulas — Munitions Crafter", entries grouped by level ascending.
+- Data before format version 3 had one fixed spellcasting block; it is migrated into a spells source on load.
 
 ### 3.4 Items
-A flat, ordered list of item entries. Items are displayed after spells on page 2 and overflow to a new page if needed. Items are displayed in manual order (the order the user adds/arranges them).
+A flat, ordered list of item entries. Items are displayed after spells & formulas on page 2 and overflow to a new page if needed. Items are displayed in manual order (the order the user adds/arranges them).
 
 Each item has:
 | Field       | Type   | Required | Notes                                              |
@@ -196,7 +196,7 @@ Each item has:
 ### 4.2 JSON Export/Import
 - **Export**: download the full character data as a `.json` file
 - **Import**: upload a `.json` file to load a character (replaces current data)
-- The JSON format is versioned (`version` field, currently 2; v1 had no items list)
+- The JSON format is versioned (`version` field, currently 3; v2 had a single fixed spellcasting block, v1 had no items list)
 
 ### 4.4 Validation
 Data from localStorage, imported files and share links is untrusted. It is rebuilt field by field on top of the defaults (`sanitizeCharacter`): wrong types fall back to defaults, numbers are coerced and clamped (level 1–20), enums (ability, proficiency rank, ability type) are checked, and unknown versions are rejected.
@@ -249,7 +249,7 @@ A toolbar button cycles between three render modes:
 - Collapsible sections to manage complexity
 - Clear labels and helpful placeholder text
 - Proficiency selectors are compact segmented controls labeled U/T/E/M/L (ARIA radio group with full rank names and arrow-key navigation)
-- Dynamic lists (Lore skills, abilities, attacks, spells) support add/remove
+- Dynamic lists (Lore skills, abilities, attacks, casting sources and their entries, items) support add/remove
 
 ### 6.2 Responsiveness
 - Optimized for desktop use (side-by-side panels)

@@ -1,13 +1,8 @@
 <script lang="ts">
-  import { SPELL_LEVELS, SPELL_LEVEL_LABELS } from '../../types/constants';
-  import type { SpellLevel } from '../../types/constants';
-  import { PROFICIENCY_LABELS } from '../../types/constants';
-  import type { AbilityEntry, ItemEntry } from '../../types/character';
-  import {
-    character,
-    computedSpellDC,
-    computedSpellAttack,
-  } from '../../stores/character';
+  import { PROFICIENCY_LABELS, CASTING_KINDS } from '../../types/constants';
+  import type { AbilityEntry, CastingSource } from '../../types/character';
+  import { character } from '../../stores/character';
+  import { calcSpellDC, calcSpellAttack } from '../../utils/calculations';
   import { signedNumber, formatActions } from '../../utils/format';
 
   function actionCost(actions: string): number {
@@ -36,14 +31,13 @@
 
   $: sortedAbilities = sortAbilities($character.abilities_list);
 
-  $: spellLevelsWithSpells = (SPELL_LEVELS as readonly SpellLevel[]).filter(
-    (lvl) => {
-      const data = $character.spellcasting.spellLevels[lvl];
-      return data && data.spells.length > 0;
-    },
-  );
+  /** Entries grouped by level, ascending; empty levels left out. */
+  function groupByLevel(source: CastingSource) {
+    const levels = [...new Set(source.entries.map((e) => e.level))].sort((a, b) => a - b);
+    return levels.map((level) => ({ level, entries: source.entries.filter((e) => e.level === level) }));
+  }
 
-  $: hasSpellcasting = $character.spellcasting.tradition !== '' || spellLevelsWithSpells.length > 0;
+  $: castingSources = $character.casting.filter((s) => s.name !== '' || s.entries.length > 0);
 </script>
 
 <div class="sheet-page">
@@ -71,50 +65,55 @@
     </div>
   {/if}
 
-  <!-- Spells -->
-  {#if hasSpellcasting}
-    <h2>Spells</h2>
+  <!-- Spells, formulas, ... -->
+  {#each castingSources as source (source.id)}
+    {@const kind = CASTING_KINDS[source.kind]}
+    <h2>{kind.title}{source.name ? ` — ${source.name}` : ''}</h2>
     <div class="spells-section">
-      <div class="stat-block">
-        <div class="stat-item">
-          <span class="stat-label">Tradition</span>
-          <span class="stat-value">{$character.spellcasting.tradition}</span>
+      {#if kind.hasDC || (kind.hasPerDay && source.perDay != null)}
+        <div class="stat-block">
+          {#if kind.hasDC}
+            <div class="stat-item">
+              <span class="stat-label">DC</span>
+              <span class="stat-value">{calcSpellDC(source, $character.abilities, $character.level)} ({PROFICIENCY_LABELS[source.proficiency]})</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Attack</span>
+              <span class="stat-value">{signedNumber(calcSpellAttack(source, $character.abilities, $character.level))} ({PROFICIENCY_LABELS[source.proficiency]})</span>
+            </div>
+          {/if}
+          {#if kind.hasPerDay && source.perDay != null}
+            <div class="stat-item">
+              <span class="stat-label">Per day</span>
+              <span class="stat-value">{source.perDay}</span>
+            </div>
+          {/if}
         </div>
-        <div class="stat-item">
-          <span class="stat-label">Spell DC</span>
-          <span class="stat-value">{$computedSpellDC} ({PROFICIENCY_LABELS[$character.spellcasting.proficiency]})</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-label">Spell Attack</span>
-          <span class="stat-value">{signedNumber($computedSpellAttack)} ({PROFICIENCY_LABELS[$character.spellcasting.proficiency]})</span>
-        </div>
-      </div>
+      {/if}
 
-      {#if spellLevelsWithSpells.length > 0}
-        {#each spellLevelsWithSpells as lvl}
-          <div class="spell-level-block">
-            <div class="spell-level-header">
-              <h3>{SPELL_LEVEL_LABELS[lvl]}</h3>
-              {#if lvl > 0}
-                <span class="spell-slots">{$character.spellcasting.spellLevels[lvl].slots} slot{$character.spellcasting.spellLevels[lvl].slots === 1 ? '' : 's'}</span>
+      {#each groupByLevel(source) as group (group.level)}
+        <div class="spell-level-block">
+          <div class="spell-level-header">
+            <h3>{kind.levelLabel(group.level)}</h3>
+            {#if kind.hasSlots && group.level > 0}
+              <span class="spell-slots">{source.slots[group.level] ?? 0} slot{source.slots[group.level] === 1 ? '' : 's'}</span>
+            {/if}
+          </div>
+          {#each group.entries as entry (entry.id)}
+            <div class="spell-entry">
+              <span class="spell-entry-name">{entry.name}</span>
+              {#if entry.actions}
+                <span class="spell-entry-actions">{formatActions(entry.actions)}</span>
+              {/if}
+              {#if entry.description}
+                <div class="spell-entry-description">{entry.description}</div>
               {/if}
             </div>
-            {#each $character.spellcasting.spellLevels[lvl].spells as spell}
-              <div class="spell-entry">
-                <span class="spell-entry-name">{spell.name}</span>
-                {#if spell.actions}
-                  <span class="spell-entry-actions">{formatActions(spell.actions)}</span>
-                {/if}
-                {#if spell.description}
-                  <div class="spell-entry-description">{spell.description}</div>
-                {/if}
-              </div>
-            {/each}
-          </div>
-        {/each}
-      {/if}
+          {/each}
+        </div>
+      {/each}
     </div>
-  {/if}
+  {/each}
 
   <!-- Items -->
   {#if $character.items.length > 0}

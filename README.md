@@ -6,7 +6,7 @@ A single-page application for creating clean, readable Pathfinder 2nd Edition ch
 
 ## Overview
 
-The app presents a two-panel interface: an input form on the left and a live A4 sheet preview on the right. Character sheets are divided into two pages — the first covering core stats, skills, and attacks, the second covering abilities, spells, and items.
+The app presents a two-panel interface: an input form on the left and a live A4 sheet preview on the right. Character sheets are divided into two pages — the first covering core stats, skills, and attacks, the second covering abilities, spells & alchemical formulas, and items.
 
 Key stats (AC, saves, skills, class DC, spell DC, attack bonuses, HP) are auto-calculated from ability modifiers and proficiency levels, with optional misc bonus fields for house rules and item bonuses. The app does not enforce game rules or include game data beyond the standard skill list, making it fully compatible with homebrew content.
 
@@ -30,7 +30,7 @@ Key stats (AC, saves, skills, class DC, spell DC, attack bonuses, HP) are auto-c
 - Full PF2e skill list with automatic bonus calculation
 - Abilities list with type tags and optional level indicators
 - Attack entries with auto-calculated bonuses
-- Full spell support (tradition, DC, attack, slots, entries per level)
+- Spells and alchemical formulas: one or more sources per character — spellcasting (tradition, DC, attack, slots per rank) and formula books (known formulas by item level, per-day count)
 - Item inventory with weight, value, amount, and remaining uses tracking
 - Auto-calculated HP (class + CON + ancestry + extras)
 - Three render modes: **Standard** (spacious two-page A4), **Dense** (compact two-column), and **Mobile** (compact single-column, auto-activates on narrow screens)

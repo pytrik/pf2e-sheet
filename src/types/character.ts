@@ -1,4 +1,4 @@
-import type { Ability, AbilityEntryType, ProficiencyRank, SpellLevel } from './constants';
+import type { Ability, AbilityEntryType, CastingKind, ProficiencyRank } from './constants';
 
 export interface AbilityModifiers {
   STR: number;
@@ -50,24 +50,31 @@ export interface AbilityEntry {
   description: string;
 }
 
-export interface SpellEntry {
+/** A spell, formula, ... Level is the spell rank (0 = cantrip) or item level. */
+export interface CastingEntry {
   id: string;
   name: string;
+  level: number;
   actions: string;
   description: string;
 }
 
-export interface SpellLevelData {
-  slots: number;
-  spells: SpellEntry[];
-}
-
-export interface SpellcastingConfig {
-  tradition: string;
+/**
+ * One list of spells, alchemical formulas, ... with its own stats. Which fields
+ * matter depends on the kind (see CASTING_KINDS); the others are kept at their
+ * defaults and ignored.
+ */
+export interface CastingSource {
+  id: string;
+  kind: CastingKind;
+  name: string;
   ability: Ability;
   proficiency: ProficiencyRank;
   miscBonus: number;
-  spellLevels: Record<SpellLevel, SpellLevelData>;
+  /** Slots per level, indexed by level. */
+  slots: number[];
+  perDay: number | null;
+  entries: CastingEntry[];
 }
 
 export interface Perception {
@@ -117,6 +124,6 @@ export interface CharacterData {
   languages: string[];
   attacks: AttackEntry[];
   abilities_list: AbilityEntry[];
-  spellcasting: SpellcastingConfig;
+  casting: CastingSource[];
   items: ItemEntry[];
 }

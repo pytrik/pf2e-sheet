@@ -1,6 +1,8 @@
 import { writable, derived } from 'svelte/store';
-import { Ability, AbilityEntryType, ProficiencyRank, STANDARD_SKILLS, SPELL_LEVELS } from '../types/constants';
-import type { CharacterData, SpellLevelData } from '../types/character';
+import { Ability, ProficiencyRank, STANDARD_SKILLS, CASTING_KINDS } from '../types/constants';
+import type { CastingKind } from '../types/constants';
+import type { CharacterData, CastingSource } from '../types/character';
+import { generateId } from '../utils/format';
 import {
   calcAC,
   calcSave,
@@ -8,21 +10,25 @@ import {
   calcHP,
   calcClassDC,
   calcPerception,
-  calcSpellDC,
-  calcSpellAttack,
   calcAttackBonus,
 } from '../utils/calculations';
 
-function createDefaultSpellLevels(): Record<number, SpellLevelData> {
-  const levels: Record<number, SpellLevelData> = {};
-  for (const lvl of SPELL_LEVELS) {
-    levels[lvl] = { slots: 0, spells: [] };
-  }
-  return levels;
+export function createCastingSource(kind: CastingKind): CastingSource {
+  return {
+    id: generateId(),
+    kind,
+    name: '',
+    ability: Ability.CHA,
+    proficiency: ProficiencyRank.Trained,
+    miscBonus: 0,
+    slots: Array(CASTING_KINDS[kind].maxLevel + 1).fill(0),
+    perDay: null,
+    entries: [],
+  };
 }
 
 /** Current save format version. Bump and handle in sanitizeCharacter on breaking changes. */
-export const CHARACTER_VERSION = 2;
+export const CHARACTER_VERSION = 3;
 
 export function createDefaultCharacter(): CharacterData {
   return {
@@ -62,13 +68,7 @@ export function createDefaultCharacter(): CharacterData {
     languages: ['Common'],
     attacks: [],
     abilities_list: [],
-    spellcasting: {
-      tradition: '',
-      ability: Ability.CHA,
-      proficiency: ProficiencyRank.Untrained,
-      miscBonus: 0,
-      spellLevels: createDefaultSpellLevels(),
-    },
+    casting: [],
     items: [],
   };
 }
@@ -111,14 +111,6 @@ export const computedSkills = derived(character, ($c) =>
     ...skill,
     total: calcSkill(skill, $c.abilities, $c.level),
   })),
-);
-
-export const computedSpellDC = derived(character, ($c) =>
-  calcSpellDC($c.spellcasting, $c.abilities, $c.level),
-);
-
-export const computedSpellAttack = derived(character, ($c) =>
-  calcSpellAttack($c.spellcasting, $c.abilities, $c.level),
 );
 
 export const computedAttacks = derived(character, ($c) =>

@@ -1,14 +1,13 @@
 import { character, createDefaultCharacter, CHARACTER_VERSION } from './character';
-import { Ability, AbilityEntryType, ProficiencyRank, SPELL_LEVELS } from '../types/constants';
-import type { SpellLevel } from '../types/constants';
+import { Ability, AbilityEntryType, ProficiencyRank, SPELL_LEVELS, CASTING_KINDS, CASTING_KIND_IDS } from '../types/constants';
 import type {
   CharacterData,
   SavingThrow,
   SkillEntry,
   AttackEntry,
   AbilityEntry,
-  SpellEntry,
-  SpellLevelData,
+  CastingEntry,
+  CastingSource,
   ItemEntry,
 } from '../types/character';
 import { generateId } from '../utils/format';
@@ -103,13 +102,57 @@ function sanitizeAbilityEntry(r: Rec): AbilityEntry {
   };
 }
 
-function sanitizeSpell(r: Rec): SpellEntry {
+function sanitizeCastingEntry(r: Rec, maxLevel: number): CastingEntry {
   return {
     id: str(r.id) || generateId(),
     name: str(r.name),
+    level: Math.round(num(r.level, 0, 0, maxLevel)),
     actions: str(r.actions),
     description: str(r.description),
   };
+}
+
+function sanitizeCastingSource(r: Rec): CastingSource {
+  const kind = oneOf(r.kind, CASTING_KIND_IDS, 'spells');
+  const { maxLevel } = CASTING_KINDS[kind];
+  const slots = Array.isArray(r.slots) ? r.slots : [];
+  return {
+    id: str(r.id) || generateId(),
+    kind,
+    name: str(r.name),
+    ability: oneOf(r.ability, ABILITIES, Ability.CHA),
+    proficiency: rank(r.proficiency, ProficiencyRank.Trained),
+    miscBonus: num(r.miscBonus, 0),
+    slots: Array.from({ length: maxLevel + 1 }, (_, i) => num(slots[i], 0, 0)),
+    perDay: numOrNull(r.perDay, 0),
+    entries: list(r.entries, (e) => sanitizeCastingEntry(e, maxLevel)),
+  };
+}
+
+/**
+ * Before v3 there was a single fixed spellcasting block with spells stored per
+ * rank. Turn it into a spells source (or nothing, if it was never filled in).
+ */
+function migrateSpellcasting(v: unknown): Rec[] {
+  const sc = rec(v);
+  const levels = rec(sc.spellLevels);
+  const slots: unknown[] = [];
+  const entries: Rec[] = [];
+  for (const lvl of SPELL_LEVELS) {
+    const l = rec(levels[lvl]);
+    slots[lvl] = l.slots;
+    for (const spell of list(l.spells, (s) => s)) entries.push({ ...spell, level: lvl });
+  }
+  if (!str(sc.tradition) && entries.length === 0) return [];
+  return [{
+    kind: 'spells',
+    name: sc.tradition,
+    ability: sc.ability,
+    proficiency: sc.proficiency,
+    miscBonus: sc.miscBonus,
+    slots,
+    entries,
+  }];
 }
 
 function sanitizeItem(r: Rec): ItemEntry {
@@ -132,7 +175,8 @@ export function sanitizeCharacter(raw: unknown): CharacterData | null {
   if (!isRec(raw)) return null;
   // v1 had no items list. Builds before 1.7.0 also labelled new characters as
   // v1, so v1 data may already contain items — those are kept.
-  if (raw.version !== 1 && raw.version !== CHARACTER_VERSION) return null;
+  // v2 had a single `spellcasting` block instead of `casting` sources.
+  if (raw.version !== 1 && raw.version !== 2 && raw.version !== CHARACTER_VERSION) return null;
 
   const d = createDefaultCharacter();
   const abilities = rec(raw.abilities);
@@ -141,14 +185,7 @@ export function sanitizeCharacter(raw: unknown): CharacterData | null {
   const hp = rec(raw.hp);
   const perception = rec(raw.perception);
   const classDC = rec(raw.classDC);
-  const spellcasting = rec(raw.spellcasting);
-  const rawLevels = rec(spellcasting.spellLevels);
-
-  const spellLevels = {} as Record<SpellLevel, SpellLevelData>;
-  for (const lvl of SPELL_LEVELS) {
-    const l = rec(rawLevels[lvl]);
-    spellLevels[lvl] = { slots: num(l.slots, 0, 0), spells: list(l.spells, sanitizeSpell) };
-  }
+  const casting = raw.version === CHARACTER_VERSION ? raw.casting : migrateSpellcasting(raw.spellcasting);
 
   return {
     version: CHARACTER_VERSION,
@@ -197,13 +234,7 @@ export function sanitizeCharacter(raw: unknown): CharacterData | null {
       : d.languages,
     attacks: list(raw.attacks, sanitizeAttack),
     abilities_list: list(raw.abilities_list, sanitizeAbilityEntry),
-    spellcasting: {
-      tradition: str(spellcasting.tradition),
-      ability: oneOf(spellcasting.ability, ABILITIES, d.spellcasting.ability),
-      proficiency: rank(spellcasting.proficiency, d.spellcasting.proficiency),
-      miscBonus: num(spellcasting.miscBonus, 0),
-      spellLevels,
-    },
+    casting: list(casting, sanitizeCastingSource),
     items: list(raw.items, sanitizeItem),
   };
 }

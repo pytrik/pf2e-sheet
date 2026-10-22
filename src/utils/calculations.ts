@@ -8,7 +8,7 @@ import type {
   SavingThrow,
   SkillEntry,
   AttackEntry,
-  SpellcastingConfig,
+  CastingSource,
 } from '../types/character';
 
 export function proficiencyBonus(rank: ProficiencyRank, level: number): number {
@@ -67,8 +67,10 @@ export function calcPerception(
   return proficiencyBonus(perception.proficiency, level) + abilities.WIS + perception.miscBonus;
 }
 
+type CastingStats = Pick<CastingSource, 'ability' | 'proficiency' | 'miscBonus'>;
+
 export function calcSpellDC(
-  spellcasting: SpellcastingConfig,
+  spellcasting: CastingStats,
   abilities: AbilityModifiers,
   level: number,
 ): number {
@@ -76,7 +78,7 @@ export function calcSpellDC(
 }
 
 export function calcSpellAttack(
-  spellcasting: SpellcastingConfig,
+  spellcasting: CastingStats,
   abilities: AbilityModifiers,
   level: number,
 ): number {
