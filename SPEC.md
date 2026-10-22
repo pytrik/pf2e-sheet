@@ -164,7 +164,7 @@ A list of **casting sources**, each of one kind. A character usually has none or
   | Field       | Type   | Notes |
   |------------|--------|-------|
   | Name       | string | |
-  | Level      | number | Spell rank or item level, set when the entry is added |
+  | Level      | number | Spell rank or item level; changeable per entry (moves it to that level's group) |
   | Actions    | string | 1, 2, 3, free, reaction |
   | Description| string | Brief description or notes |
 - Input: entries are grouped by level; only levels with entries are shown, each with its own add button, plus a level picker to start a new level. Removing a whole source asks for inline confirmation.
@@ -196,6 +196,13 @@ Each item has:
 ### 4.2 JSON Export/Import
 - **Export**: download the full character data as a `.json` file
 - **Import**: upload a `.json` file to load a character (replaces current data)
+- **Pathbuilder import**: Import also accepts a Pathbuilder 2e "Export JSON" file (`{ success, build }` or the bare build), converted in `stores/pathbuilder.ts` and then validated like any other import:
+  - Ability scores → modifiers; proficiency values 0/2/4/6/8 → ranks; lores → Lore skills; `mods` → misc bonuses
+  - AC proficiency from the worn armor's category, item bonus from `acTotal`; the Dex cap is inferred when `acAbilityBonus` is below the Dex modifier
+  - Weapons → attacks: proficiency from specific or category proficiency, ability (STR/DEX) inferred from Pathbuilder's attack total with any rest as misc, damage from striking dice + die + bonus + extra damage
+  - Feats and class features → abilities; armor and equipment → items, money as a "Money" item
+  - Spellcasters → spells sources (slots per rank); focus spells → a spells source per tradition at rank ⌈level/2⌉; formula books → formulas sources
+  - Pathbuilder doesn't export descriptions or formula levels (formulas land at level 0); after importing, a dialog lists what couldn't be imported
 - The JSON format is versioned (`version` field, currently 3; v2 had a single fixed spellcasting block, v1 had no items list)
 
 ### 4.4 Validation
@@ -282,7 +289,7 @@ A toolbar button cycles between three render modes:
 
 - **No rules enforcement**: the app does not validate game rules, feat prerequisites, or legal builds
 - **No game data**: no feat/spell/class databases — all content is user-entered (except the skill list)
-- **No external imports**: no Pathbuilder, Foundry, or other tool integration
+- **No other external integrations**: no Foundry or other tool integration (Pathbuilder JSON import is the one exception)
 - **No multi-character management**: one character at a time (use export/import to switch)
 - **No server/cloud sync**: entirely local
 - **No full mobile optimization**: desktop-first, but a dedicated Mobile render mode provides a readable single-column view on narrow screens

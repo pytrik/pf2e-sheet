@@ -35,6 +35,7 @@ Key stats (AC, saves, skills, class DC, spell DC, attack bonuses, HP) are auto-c
 - Auto-calculated HP (class + CON + ancestry + extras)
 - Three render modes: **Standard** (spacious two-page A4), **Dense** (compact two-column), and **Mobile** (compact single-column, auto-activates on narrow screens)
 - localStorage auto-save with JSON export/import
+- Import characters from Pathbuilder 2e ("Export JSON")
 - Share characters via URL — compresses character data into the link, no server needed
 - Browser-native printing with print-optimized CSS
 - Clean, minimal sheet design with toolbar icons
@@ -56,6 +57,6 @@ npm run build    # production build → dist/index.html
 1. Open the app in a browser
 2. Fill in character details using the input form on the left
 3. Preview the rendered sheet on the right in real time
-4. Use **Export** to save character data as JSON, **Import** to load it back
+4. Use **Export** to save character data as JSON, **Import** to load it back — Import also accepts a Pathbuilder 2e JSON export
 5. Click **Share** to copy a URL containing your character — anyone who opens it loads the sheet instantly (asks first if it would replace a character already saved in that browser)
 6. Print via Ctrl+P — the preview is styled for clean A4 output

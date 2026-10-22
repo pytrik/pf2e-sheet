@@ -11,6 +11,7 @@ import type {
   ItemEntry,
 } from '../types/character';
 import { generateId } from '../utils/format';
+import { getPathbuilderBuild, fromPathbuilder } from './pathbuilder';
 
 const STORAGE_KEY = 'pf2e-character';
 
@@ -299,13 +300,20 @@ export function exportCharacter(data: CharacterData): void {
   URL.revokeObjectURL(url);
 }
 
-export function importCharacter(file: File): Promise<void> {
+/**
+ * Import a character file: this app's own JSON export, or a Pathbuilder 2e
+ * "Export JSON" file. Resolves with notes on what a Pathbuilder file couldn't
+ * provide, or null for a native file.
+ */
+export function importCharacter(file: File): Promise<string[] | null> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {
       try {
         const raw = JSON.parse(reader.result as string);
-        const data = sanitizeCharacter(raw);
+        const build = getPathbuilderBuild(raw);
+        const converted = build ? fromPathbuilder(build) : null;
+        const data = sanitizeCharacter(converted ? converted.data : raw);
         if (!data) {
           reject(new Error(
             typeof raw?.version === 'number'
@@ -315,7 +323,7 @@ export function importCharacter(file: File): Promise<void> {
           return;
         }
         character.set(data);
-        resolve();
+        resolve(converted ? converted.notes : null);
       } catch {
         reject(new Error('Invalid JSON file'));
       }

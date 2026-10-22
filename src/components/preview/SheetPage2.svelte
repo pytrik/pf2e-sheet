@@ -95,7 +95,7 @@
         <div class="spell-level-block">
           <div class="spell-level-header">
             <h3>{kind.levelLabel(group.level)}</h3>
-            {#if kind.hasSlots && group.level > 0}
+            {#if kind.hasSlots && group.level > 0 && source.slots[group.level] > 0}
               <span class="spell-slots">{source.slots[group.level] ?? 0} slot{source.slots[group.level] === 1 ? '' : 's'}</span>
             {/if}
           </div>

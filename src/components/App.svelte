@@ -83,7 +83,13 @@
     const file = input.files?.[0];
     if (!file) return;
     try {
-      await importCharacter(file);
+      const notes = await importCharacter(file);
+      if (notes) {
+        showAlert(
+          'Imported from Pathbuilder. Check the sheet — some things could not be imported:\n\n' +
+          notes.map((n) => `• ${n}`).join('\n'),
+        );
+      }
     } catch (err) {
       showAlert((err as Error).message);
     }
@@ -161,7 +167,7 @@
     <p>Fill in the form on the left — the sheet preview on the right updates live.</p>
     <ul>
       <li>Stats, saves, skills, and attack bonuses are <strong>auto-calculated</strong> from ability modifiers and proficiency.</li>
-      <li>Your character is <strong>auto-saved</strong> in the browser. Use Export/Import to back up or transfer as JSON.</li>
+      <li>Your character is <strong>auto-saved</strong> in the browser. Use Export/Import to back up or transfer as JSON. Import also accepts a <strong>Pathbuilder 2e</strong> JSON export.</li>
       <li>Click <strong>Share</strong> to copy a link that contains your character — anyone who opens it will see your sheet, no file transfer needed.</li>
       <li>Toggle between <strong>Standard</strong> (spacious, two-page), <strong>Dense</strong> (compact, two-column), and <strong>Mobile</strong> (compact, single-column, full-width) sheet layouts. Mobile auto-activates on narrow screens.</li>
       <li>Press <strong>Ctrl+P</strong> (or the Print button) to print — only the sheet pages are printed.</li>
